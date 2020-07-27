@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetCoreAPI</name>
+    </assembly>
+    <members>
+        <member name="T:NetCoreAPI.Controllers.WeatherForecastController">
+            <summary>
+            天气测试模块
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.WeatherForecastController.Get">
+            <summary>
+            测试天气
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetCoreAPI.WeatherForecast">
+            <summary>
+            天气
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.WeatherForecast.Date">
+            <summary>
+            时间
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.WeatherForecast.TemperatureC">
+            <summary>
+            aa
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.WeatherForecast.Summary">
+            <summary>
+            天气
+            </summary>
+        </member>
+    </members>
+</doc>
