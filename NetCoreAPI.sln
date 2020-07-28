@@ -3,22 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAPI", "NetCoreAPI\NetCoreAPI.csproj", "{9043960F-D2D5-48BC-8B85-7F291DA2C4A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreAPI", "NetCoreAPI\NetCoreAPI.csproj", "{9043960F-D2D5-48BC-8B85-7F291DA2C4A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB776B80-C5BA-4C42-A5EE-9378ED3B2B53}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bussiness", "Bussiness\Bussiness.csproj", "{1219695C-B9EF-426F-97E1-4F082EC99C1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bussiness", "Bussiness\Bussiness.csproj", "{1219695C-B9EF-426F-97E1-4F082EC99C1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{480AD256-43B8-4125-BE52-1C61A6F81D8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity", "Entity\Entity.csproj", "{480AD256-43B8-4125-BE52-1C61A6F81D8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IService", "IService\IService.csproj", "{B731C5F7-E13D-4F19-95AF-18417E5F8227}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IService", "IService\IService.csproj", "{B731C5F7-E13D-4F19-95AF-18417E5F8227}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Model\Common.csproj", "{5E4B0237-79CA-4863-85F5-C2003AA8C158}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{21360541-AFB1-469B-8EE9-7FF835D7BB65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{21360541-AFB1-469B-8EE9-7FF835D7BB65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "Authorization\Authorization.csproj", "{BD3A3084-AF30-4753-BAB8-F4EF09FA67D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{D643CE72-4D1A-4834-B4DC-D364EA7ECB15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,14 +44,18 @@ Global
 		{B731C5F7-E13D-4F19-95AF-18417E5F8227}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B731C5F7-E13D-4F19-95AF-18417E5F8227}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B731C5F7-E13D-4F19-95AF-18417E5F8227}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E4B0237-79CA-4863-85F5-C2003AA8C158}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E4B0237-79CA-4863-85F5-C2003AA8C158}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E4B0237-79CA-4863-85F5-C2003AA8C158}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E4B0237-79CA-4863-85F5-C2003AA8C158}.Release|Any CPU.Build.0 = Release|Any CPU
 		{21360541-AFB1-469B-8EE9-7FF835D7BB65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{21360541-AFB1-469B-8EE9-7FF835D7BB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21360541-AFB1-469B-8EE9-7FF835D7BB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21360541-AFB1-469B-8EE9-7FF835D7BB65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD3A3084-AF30-4753-BAB8-F4EF09FA67D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD3A3084-AF30-4753-BAB8-F4EF09FA67D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD3A3084-AF30-4753-BAB8-F4EF09FA67D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD3A3084-AF30-4753-BAB8-F4EF09FA67D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D643CE72-4D1A-4834-B4DC-D364EA7ECB15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D643CE72-4D1A-4834-B4DC-D364EA7ECB15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D643CE72-4D1A-4834-B4DC-D364EA7ECB15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D643CE72-4D1A-4834-B4DC-D364EA7ECB15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

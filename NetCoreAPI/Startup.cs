@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Common.Redis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using NetCoreAPI.AuthHelp;
 
 namespace NetCoreAPI
 {
@@ -27,7 +29,6 @@ namespace NetCoreAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
 
             #region Swagger
             services.AddSwaggerGen(c =>
@@ -79,6 +80,19 @@ namespace NetCoreAPI
 
             });
             #endregion
+
+            //×¢²áRedis
+            services.AddSingleton<IRedisCacheManager, RedisCacheManager>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("System", policy => policy.RequireClaim("SystemType").Build());
+                options.AddPolicy("Client", policy => policy.RequireClaim("ClientType").Build());
+                options.AddPolicy("Admin", policy => policy.RequireClaim("AdminType").Build());
+            });
+
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,6 +102,8 @@ namespace NetCoreAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<TokenAuth>();
 
             app.UseHttpsRedirection();
 

@@ -21,5 +21,9 @@
     <Folder Include="Common\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Authorization\Authorization.csproj" />
+  </ItemGroup>
+
 
 </Project>

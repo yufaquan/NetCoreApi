@@ -4,6 +4,30 @@
         <name>NetCoreAPI</name>
     </assembly>
     <members>
+        <member name="T:NetCoreAPI.AuthHelp.TokenAuth">
+            <summary>
+            Token验证授权中间件
+            </summary>
+        </member>
+        <member name="F:NetCoreAPI.AuthHelp.TokenAuth._next">
+            <summary>
+            http委托
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.AuthHelp.TokenAuth.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Common.Redis.IRedisCacheManager)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="next"></param>
+            <param name="redisCacheManager"></param>
+        </member>
+        <member name="M:NetCoreAPI.AuthHelp.TokenAuth.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            验证授权
+            </summary>
+            <param name="httpContext"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetCoreAPI.Controllers.WeatherForecastController">
             <summary>
             天气测试模块
