@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.Redis
+namespace Common.Cache
 {
-    public class RedisCacheManager : IRedisCacheManager
+    public class RedisCacheManager : ICacheManager
     {
         private readonly string redisConnenctionString;
         public volatile ConnectionMultiplexer redisConnection;
@@ -96,13 +96,14 @@ namespace Common.Redis
             redisConnection.GetDatabase().KeyDelete(key);
         }
 
-        public void Set(string key, object value, TimeSpan cacheTime)
+        public bool Set(string key, object value, TimeSpan expiresSliding, TimeSpan expiressAbsoulte)
         {
             if (value != null)
             {
                 //序列化，将object值生成RedisValue
-                redisConnection.GetDatabase().StringSet(key, SerializeHelper.Serialize(value), cacheTime);
+                return redisConnection.GetDatabase().StringSet(key, SerializeHelper.Serialize(value),expiressAbsoulte);
             }
+            return false;
         }
 
         public bool SetValue(string key, byte[] value)

@@ -1,6 +1,6 @@
 ﻿using Authorization.Model;
 using Common;
-using Common.Redis;
+using Common.Cache;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -19,13 +19,13 @@ namespace NetCoreAPI.AuthHelp
         /// </summary>
         private readonly RequestDelegate _next;
 
-        private readonly IRedisCacheManager _redisCache;
+        private readonly ICacheManager _redisCache;
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="next"></param>
         /// <param name="redisCacheManager"></param>
-        public TokenAuth(RequestDelegate next,IRedisCacheManager redisCacheManager)
+        public TokenAuth(RequestDelegate next,ICacheManager redisCacheManager)
         {
             _next = next;
             _redisCache = redisCacheManager;
@@ -50,13 +50,17 @@ namespace NetCoreAPI.AuthHelp
                 //验证缓存中是否存在该jwt字符串
                 if (!_redisCache.Exists(jwtStr))
                 {
-                    return httpContext.Response.WriteAsync("非法请求");
+                    //httpContext.AuthFailed();
+                    return _next(httpContext); 
                 }
                 TokenModel tm = _redisCache.Get<TokenModel>(jwtStr);
                 //提取tokenModel中的Sub属性进行authorize认证
                 List<Claim> lc = new List<Claim>();
-                Claim c = new Claim(tm.Sub + "Type", tm.Sub);
-                lc.Add(c);
+                if (!string.IsNullOrWhiteSpace(tm.Sub))
+                {
+                    Claim c = new Claim(tm.Sub + "Type", tm.Sub);
+                    lc.Add(c);
+                }
                 ClaimsIdentity identity = new ClaimsIdentity(lc);
                 ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                 httpContext.User = principal;

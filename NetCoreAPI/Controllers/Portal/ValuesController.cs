@@ -3,38 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Common;
-using Common.Redis;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Authorization;
+using Common.Cache;
+using System.Linq.Expressions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace NetCoreAPI.Controllers.Portal
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly IRedisCacheManager _redisCache;
+        private readonly ICacheManager _redisCache;
 
-        public ValuesController(IRedisCacheManager redisCacheManager)
+        public ValuesController(ICacheManager redisCacheManager)
         {
             _redisCache = redisCacheManager;
         }
 
         // GET: api/<ValuesController>
-        [Authorize(Policy="Admin")]
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
+
         // GET api/<ValuesController>/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            _redisCache.Set("abcde", new { a = 1, b = 2 },new TimeSpan(0,5,0));
+            _redisCache.Set("abcde", new { a = 1, b = 2 },TimeSpan.FromMinutes(5), new TimeSpan(0,5,0));
             return "value";
         }
 
@@ -42,6 +46,7 @@ namespace NetCoreAPI.Controllers.Portal
         [HttpPost]
         public void Post([FromBody] string value)
         {
+            throw new Exception("zdy");
         }
 
         // PUT api/<ValuesController>/5
@@ -51,9 +56,11 @@ namespace NetCoreAPI.Controllers.Portal
         }
 
         // DELETE api/<ValuesController>/5
+        [AllowAnonymous]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            throw new Exception("zdyDelete");
         }
     }
 }

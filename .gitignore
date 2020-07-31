@@ -10,7 +10,8 @@
 /IService/obj
 /Common/obj
 /Service/obj
-
-/Authorization/obj/Debug/netstandard2.0
-/Authorization/bin/Debug/netstandard2.0
 /Authorization/obj
+/Authorization/bin
+/Authorization/obj
+/Log/obj
+/Log/bin

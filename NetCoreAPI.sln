@@ -18,9 +18,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IService", "IService\IServi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{21360541-AFB1-469B-8EE9-7FF835D7BB65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "Authorization\Authorization.csproj", "{BD3A3084-AF30-4753-BAB8-F4EF09FA67D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization", "Authorization\Authorization.csproj", "{BD3A3084-AF30-4753-BAB8-F4EF09FA67D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{D643CE72-4D1A-4834-B4DC-D364EA7ECB15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{D643CE72-4D1A-4834-B4DC-D364EA7ECB15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Log\Log.csproj", "{46098A99-46EC-464B-8BA8-FB570424CE1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{D643CE72-4D1A-4834-B4DC-D364EA7ECB15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D643CE72-4D1A-4834-B4DC-D364EA7ECB15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D643CE72-4D1A-4834-B4DC-D364EA7ECB15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46098A99-46EC-464B-8BA8-FB570424CE1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46098A99-46EC-464B-8BA8-FB570424CE1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46098A99-46EC-464B-8BA8-FB570424CE1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46098A99-46EC-464B-8BA8-FB570424CE1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

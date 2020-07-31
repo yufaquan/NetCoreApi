@@ -4,36 +4,195 @@
         <name>NetCoreAPI</name>
     </assembly>
     <members>
-        <member name="T:NetCoreAPI.AuthHelp.TokenAuth">
+        <member name="T:NetCoreAPI.AuthHelp.ManageVerifyAttribute">
             <summary>
-            Token验证授权中间件
+            该过虑器提供给所有对外的RestApi接口使用
+            在有需要验证每个接口/方法是否只为管理人员用户调用时使用
+            方法级别的过率器
             </summary>
         </member>
-        <member name="F:NetCoreAPI.AuthHelp.TokenAuth._next">
+        <member name="M:NetCoreAPI.AuthHelp.ManageVerifyAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
             <summary>
-            http委托
+            方法执行前
+            判断用户是否为管理角色，不是则抛出异常
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:NetCoreAPI.AuthHelp.ManageVerifyAttribute.OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)">
+            <summary>
+            方法执行后
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:NetCoreAPI.AuthHelp.ManageVerifyAttribute.IsHaveAuthorize(System.String,System.Type)">
+            <summary>
+            判断是否有权限
+            </summary>
+            <param name="actionname"></param>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetCoreAPI.ExceptionActionFilter">
+            <summary>
+            全局异常处理
             </summary>
         </member>
-        <member name="M:NetCoreAPI.AuthHelp.TokenAuth.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Common.Redis.IRedisCacheManager)">
+        <member name="M:NetCoreAPI.ExceptionActionFilter.WriteLog(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            写入日志（log4net）
+            </summary>
+            <param name="context">提供使用</param>
+        </member>
+        <member name="T:NetCoreAPI.NoAuthorizeException">
+            <summary>
+            没有被授权的异常
+            </summary>
+        </member>
+        <member name="T:NetCoreAPI.UserFriendlyException">
+            <summary>
+            用户友好异常
+            </summary>
+        </member>
+        <member name="T:NetCoreAPI.ExceptionMessage">
+            <summary>
+            异常错误信息
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.ExceptionMessage.#ctor(System.Exception)">
+            <summary>
+            构造函数
+            默认显示异常页面
+            </summary>
+            <param name="ex">异常对象</param>
+        </member>
+        <member name="M:NetCoreAPI.ExceptionMessage.#ctor(System.Exception,System.Boolean)">
             <summary>
             构造函数
             </summary>
-            <param name="next"></param>
-            <param name="redisCacheManager"></param>
+            <param name="ex">异常对象</param>
+            <param name="isShowException">是否显示异常页面</param>
         </member>
-        <member name="M:NetCoreAPI.AuthHelp.TokenAuth.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+        <member name="P:NetCoreAPI.ExceptionMessage.MsgType">
             <summary>
-            验证授权
+            消息类型
             </summary>
-            <param name="httpContext"></param>
-            <returns></returns>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.Message">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.Path">
+            <summary>
+            请求路径
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.Assembly">
+            <summary>
+            程序集名称
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.ActionArguments">
+            <summary>
+            异常参数
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.HttpMethod">
+            <summary>
+            请求类型
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.StackTrace">
+            <summary>
+            异常堆栈
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.Source">
+            <summary>
+            异常源
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.IP">
+            <summary>
+            服务器IP 端口
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.UserAgent">
+            <summary>
+            客户端浏览器标识
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.ShowException">
+            <summary>
+            是否显示异常界面
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.Time">
+            <summary>
+            异常发生时间
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.ExceptionMessage.Method">
+            <summary>
+            异常发生方法
+            </summary>
+        </member>
+        <member name="T:NetCoreAPI.AjaxResult">
+            <summary>
+            表示Ajax操作结果
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.AjaxResult.type">
+            <summary>
+            获取 Ajax操作结果类型
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.AjaxResult.errorcode">
+            <summary>
+            获取 Ajax操作结果编码
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.AjaxResult.message">
+            <summary>
+            获取 消息内容
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.AjaxResult.resultdata">
+            <summary>
+            获取 返回数据
+            </summary>
+        </member>
+        <member name="T:NetCoreAPI.ResultType">
+            <summary>
+            表示 ajax 操作结果类型的枚举
+            </summary>
+        </member>
+        <member name="F:NetCoreAPI.ResultType.info">
+            <summary>
+            消息结果类型
+            </summary>
+        </member>
+        <member name="F:NetCoreAPI.ResultType.success">
+            <summary>
+            成功结果类型
+            </summary>
+        </member>
+        <member name="F:NetCoreAPI.ResultType.warning">
+            <summary>
+            警告结果类型
+            </summary>
+        </member>
+        <member name="F:NetCoreAPI.ResultType.error">
+            <summary>
+            异常结果类型
+            </summary>
         </member>
         <member name="T:NetCoreAPI.Controllers.WeatherForecastController">
             <summary>
             天气测试模块
             </summary>
         </member>
-        <member name="M:NetCoreAPI.Controllers.WeatherForecastController.Get">
+        <member name="M:NetCoreAPI.Controllers.WeatherForecastController.Get(System.Int32)">
             <summary>
             测试天气
             </summary>
