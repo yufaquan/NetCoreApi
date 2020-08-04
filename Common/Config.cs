@@ -15,6 +15,7 @@ namespace Common
         private static JWTInfo jwtInfo = new JWTInfo() { Issuer = "YFQ", SigningKey = "YFQAPI's Secret Key" };
         private static string visitTokenSY = "yufaquanzhendehenshuaia";
         private static string userTokenSY = "yufaquanqueshihenshuaine";
+        private static string userTokenSign = "yufquanzhendeshichaojideshuaihaoma.shuidoubibuliaolezhende.";
 
         /// <summary>
         /// 是否使用Redis
@@ -41,6 +42,10 @@ namespace Common
         /// 用户Token的秘钥
         /// </summary>
         public static string UserTokenSY { get => userTokenSY; set => userTokenSY = value; }
+        /// <summary>
+        /// 用户Token的签名
+        /// </summary>
+        public static string UserTokenSign { get => userTokenSign; set => userTokenSign = value; }
     }
 
     public class JWTInfo

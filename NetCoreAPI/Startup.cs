@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -97,7 +98,14 @@ namespace NetCoreAPI
             #endregion
 
             //注册缓存
-            services.AddSingleton<ICacheManager, RedisCacheManager>();
+            if (Config.IsOpenRedis.ToLower()=="true")
+            {
+                services.AddSingleton<ICacheManager, RedisCacheManager>();
+            }
+            else
+            {
+                services.AddSingleton<ICacheManager, MyMemoryCache>();
+            }
 
             #region 身份验证
             //身份验证
@@ -193,6 +201,10 @@ namespace NetCoreAPI
             //认证服务
             //services.AddSingleton<IAuthorizationHandler, PolicyHandler>();
 
+            services.AddScoped<Current>();
+
+            services.AddCors();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -215,6 +227,14 @@ namespace NetCoreAPI
             {
                 endpoints.MapControllers();
             });
+
+            //跨域
+            app.UseCors(builder => builder
+              .AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials()
+              );
 
             #region Swagger
             app.UseSwagger();

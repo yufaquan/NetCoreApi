@@ -43,9 +43,10 @@ namespace NetCoreAPI
                 // Handle page exception
             }
 
-           
+
 
             //base.OnException(context);
+            Current.Clear();
             context.ExceptionHandled = true;
         }
 

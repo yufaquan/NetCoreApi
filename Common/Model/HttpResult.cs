@@ -15,11 +15,15 @@ public class HttpResult
 
     public object Data { get; set; }
 
-    public static HttpResult Error = new HttpResult() { Code = 500, Message = "啊哦，一不小心走丢了，试着返回再来哦，多次走丢记得联系管理员呀。" };
-    public static HttpResult NotAuth = new HttpResult() { Code = 401, Message = "您暂时没有权限访问哦！" };
+    public static HttpResult Error = new HttpResult() { Code = (int)HttpResultCode.Error, Message = "小单跑丢了，您可以尝试返回重试哦。一直找不到记得联系管理员呢。" };
+    public static HttpResult NotAuth = new HttpResult() { Code = (int)HttpResultCode.NotAuth, Message = "您暂时没有权限访问哦！" };
     public static HttpResult Success(object data)
     {
         return new HttpResult() { Code = (int)HttpResultCode.Success, Message = "OK!", Data= data };
+    }
+    public static HttpResult UserTokenError(object data,string errorMessage)
+    {
+        return new HttpResult() { Code = (int)HttpResultCode.Success, Message = errorMessage, Data = data };
     }
 }
 
@@ -29,5 +33,11 @@ public class HttpResult
 public enum HttpResultCode
 {
     [Display(Name = "成功")]
-    Success =0
+    Success =0,
+    [Display(Name = "用户Token校验失败")]
+    UserTokenError = 0,
+    [Display(Name = "无权访问")]
+    NotAuth = 401,
+    [Display(Name = "系统错误")]
+    Error = 500
 }

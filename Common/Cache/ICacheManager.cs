@@ -10,10 +10,19 @@ namespace Common.Cache
     public interface ICacheManager
     {
 
-        //获取 Reids 缓存值
+        /// <summary>
+        /// 获取 Reids 缓存值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         string GetValue(string key);
 
-        //获取值，并序列化
+        /// <summary>
+        /// 获取值，并序列化
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
         TEntity Get<TEntity>(string key);
 
         //
@@ -26,13 +35,22 @@ namespace Common.Cache
         /// <param name="expiressAbsoulte">绝对过期时长</param>
         bool Set(string key, object value ,TimeSpan expiresSliding, TimeSpan expiressAbsoulte);
 
-        //判断是否存在
+        /// <summary>
+        /// 判断是否存在
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>true：存在</returns>
         bool Exists(string key);
 
-        //移除某一个缓存值
+        /// <summary>
+        /// 移除某一个缓存值
+        /// </summary>
+        /// <param name="key"></param>
         void Remove(string key);
 
-        //全部清除
+        /// <summary>
+        /// 全部清除
+        /// </summary>
         void Clear();
     }
 }

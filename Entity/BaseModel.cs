@@ -8,7 +8,7 @@ namespace Entity
     public class BaseModel
     {
         /// <summary>
-        /// 创建人
+        /// 数据Id
         /// </summary>
         [SugarColumn(ColumnName = "Id")]
         public virtual int Id { get; set; }

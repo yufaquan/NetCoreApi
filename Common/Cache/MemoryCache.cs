@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Common.Cache
@@ -13,10 +15,34 @@ namespace Common.Cache
         {
             this._cache =new MemoryCache(new MemoryCacheOptions());;
         }
-
+        /// <summary>
+        /// 清空缓存
+        /// </summary>
         public void Clear()
         {
-            
+            var al = GetAllKeys();
+            foreach (string key in al)
+            {
+                _cache.Remove(key);
+            }
+        }
+
+        /// <summary>
+        /// 获取所有key
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetAllKeys()
+        {
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            var entries = _cache.GetType().GetField("_entries", flags).GetValue(_cache);
+            var cacheItems = entries as IDictionary;
+            var keys = new List<string>();
+            if (cacheItems == null) return keys;
+            foreach (DictionaryEntry cacheItem in cacheItems)
+            {
+                keys.Add(cacheItem.Key.ToString());
+            }
+            return keys;
         }
 
         /// <summary>
@@ -36,7 +62,11 @@ namespace Common.Cache
 
         public TEntity Get<TEntity>(string key)
         {
-            throw new NotImplementedException();
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            return _cache.Get<TEntity>(key);
         }
 
         /// <summary>
@@ -67,6 +97,10 @@ namespace Common.Cache
             return _cache.Get<string>(key);
         }
 
+        /// <summary>
+        /// 删除缓存
+        /// </summary>
+        /// <param name="key"></param>
         public void Remove(string key)
         {
             _cache.Remove(key);
@@ -94,10 +128,13 @@ namespace Common.Cache
                     new MemoryCacheEntryOptions()
                     .SetSlidingExpiration(expiresSliding)
                     .SetAbsoluteExpiration(expiressAbsoulte)
+                    
                     );
 
             return Exists(key);
         }
+
+
 
 
     }

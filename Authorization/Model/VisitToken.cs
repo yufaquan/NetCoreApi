@@ -7,7 +7,7 @@ namespace Authorization.Model
     /// <summary>
     /// 访问token
     /// </summary>
-    public class VisitTokenModel
+    public class VisitToken
     {
         /// <summary>
         /// 来自

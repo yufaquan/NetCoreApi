@@ -22,7 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization", "Authorizat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{D643CE72-4D1A-4834-B4DC-D364EA7ECB15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Log\Log.csproj", "{46098A99-46EC-464B-8BA8-FB570424CE1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Log", "Log\Log.csproj", "{46098A99-46EC-464B-8BA8-FB570424CE1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySqlSugar", "SqlSugar\MySqlSugar.csproj", "{BB343B65-5F66-4900-87DE-99B8F75A021B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,10 @@ Global
 		{46098A99-46EC-464B-8BA8-FB570424CE1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46098A99-46EC-464B-8BA8-FB570424CE1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46098A99-46EC-464B-8BA8-FB570424CE1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB343B65-5F66-4900-87DE-99B8F75A021B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB343B65-5F66-4900-87DE-99B8F75A021B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB343B65-5F66-4900-87DE-99B8F75A021B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB343B65-5F66-4900-87DE-99B8F75A021B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

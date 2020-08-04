@@ -49,17 +49,44 @@ namespace NetCoreAPI.Controllers
         }
 
 
-        //[AllowAnonymous]
-        //[HttpGet]
-        //public JsonResult GetJWT()
-        //{
-            //var token = TokenHelp.IssueJWT(new Authorization.Model.TokenModel() { Mobile = "13235601859", Sub = "Default", Uid = 1, Uname = "张珊", UNickname = "ashanasf" }, TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5));
-            //var obj = new
-            //{
-            //    token,
-            //    fullToken = "Bearer " + token
-            //};
-            //return new JsonResult(HttpResult.Success(obj));
-        //}
+        /// <summary>
+        /// 获取访问token
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
+        public JsonResult GetJWT()
+        {
+            var token = TokenHelp.WriteVisitToken();
+            var obj = new
+            {
+                token,
+                fullToken = "Bearer " + token
+            };
+            return new JsonResult(HttpResult.Success(obj));
+        }
+    }
+
+    /// <summary>
+    /// 天气
+    /// </summary>
+    public class WeatherForecast
+    {
+        /// <summary>
+        /// 时间
+        /// </summary>
+        public DateTime Date { get; set; }
+
+        /// <summary>
+        /// aa
+        /// </summary>
+        public int TemperatureC { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+        /// <summary>
+        /// 天气
+        /// </summary>
+        public string Summary { get; set; }
     }
 }

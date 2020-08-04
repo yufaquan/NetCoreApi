@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace NetCoreAPI.AuthHelp
@@ -19,6 +20,8 @@ namespace NetCoreAPI.AuthHelp
     public class ManageVerifyAttribute : Attribute, IActionFilter
     {
         private const string DURATION = "DURATION";
+
+
         /// <summary>
         /// 方法执行前
         /// 判断用户是否为管理角色，不是则抛出异常
@@ -37,10 +40,30 @@ namespace NetCoreAPI.AuthHelp
             //检测是否包含'Authorization'请求头，如果不包含返回context进行下一个中间件，用于访问不需要认证的API
             if (!headers.ContainsKey("Authorization"))
             {
-               
+                context.Result = new JsonResult(HttpResult.NotAuth);
             }
             var tokenStr = headers["Authorization"];
             string jwtStr = tokenStr.ToString().Substring("Bearer ".Length).Trim();
+            string errorMessage=string.Empty;
+            if(!TokenHelp.VerifyVisitToken(tokenStr, false, out errorMessage))
+            {
+                context.Result = new JsonResult(HttpResult.NotAuth);
+            }
+            //存储当前访问的用户token
+            if (headers.ContainsKey("UserToken"))
+            {
+                Current.CurrentUserToken = headers["UserToken"];
+            }
+            else
+            {
+                Current.CurrentUserToken = string.Empty;
+            }
+            //检验用户token
+            int? userId;
+            if (!TokenHelp.VerifyUserToken(Current.CurrentUserToken,out userId, out errorMessage))
+            {
+                context.Result = new JsonResult(HttpResult.UserTokenError(new { },errorMessage+"请重新登录。"));
+            }
             //获得Controller类型
             Type t = context.Controller.GetType();
             //获得方法名
@@ -48,12 +71,11 @@ namespace NetCoreAPI.AuthHelp
             //是否有权限
             if (!IsHaveAuthorize(Commons.FirstCharToUpper(actionname), t))
             {
-                //context.HttpContext.Response.Clear();
-                //context.HttpContext.AuthFailed();
-                //记录访问
-
                 context.Result = new JsonResult(HttpResult.NotAuth);
             }
+            //成功访问
+            //记录当前用户Id
+            Current.CurrentUserId = userId;
             #endregion
 
         }
@@ -67,19 +89,20 @@ namespace NetCoreAPI.AuthHelp
             #region 记录API调用及响应时长等
             var stopwach = context.RouteData.Values[DURATION] as Stopwatch;
             stopwach.Stop();
-            TimeSpan time = stopwach.Elapsed; 
+            TimeSpan time = stopwach.Elapsed;
             //记录访问
 
             #endregion
+            Current.Clear();
         }
 
 
         /// <summary>
         /// 判断是否有权限
         /// </summary>
-        /// <param name="actionname"></param>
-        /// <param name="t"></param>
-        /// <returns></returns>
+        /// <param name="actionname">方法名</param>
+        /// <param name="t">Controller类型</param>
+        /// <returns>true：有权限；</returns>
         private bool IsHaveAuthorize(string actionname, Type t)
         {
             //var upList = UserManagement.Initialize.GetCurrentUserPermissions();

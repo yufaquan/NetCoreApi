@@ -28,9 +28,9 @@
             <summary>
             判断是否有权限
             </summary>
-            <param name="actionname"></param>
-            <param name="t"></param>
-            <returns></returns>
+            <param name="actionname">方法名</param>
+            <param name="t">Controller类型</param>
+            <returns>true：有权限；</returns>
         </member>
         <member name="T:NetCoreAPI.ExceptionActionFilter">
             <summary>
@@ -187,6 +187,11 @@
             异常结果类型
             </summary>
         </member>
+        <member name="T:NetCoreAPI.ServiceHelp">
+            <summary>
+            服务帮助类
+            </summary>
+        </member>
         <member name="T:NetCoreAPI.Controllers.WeatherForecastController">
             <summary>
             天气测试模块
@@ -198,22 +203,28 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:NetCoreAPI.WeatherForecast">
+        <member name="M:NetCoreAPI.Controllers.WeatherForecastController.GetJWT">
+            <summary>
+            获取访问token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetCoreAPI.Controllers.WeatherForecast">
             <summary>
             天气
             </summary>
         </member>
-        <member name="P:NetCoreAPI.WeatherForecast.Date">
+        <member name="P:NetCoreAPI.Controllers.WeatherForecast.Date">
             <summary>
             时间
             </summary>
         </member>
-        <member name="P:NetCoreAPI.WeatherForecast.TemperatureC">
+        <member name="P:NetCoreAPI.Controllers.WeatherForecast.TemperatureC">
             <summary>
             aa
             </summary>
         </member>
-        <member name="P:NetCoreAPI.WeatherForecast.Summary">
+        <member name="P:NetCoreAPI.Controllers.WeatherForecast.Summary">
             <summary>
             天气
             </summary>
