@@ -21,14 +21,14 @@ namespace Entity
 
         }
         /// <summary>
-        /// Desc:名称
+        /// Desc:名称 可以用于登录 （一般情况下不允修改，去重）
         /// Default:
         /// Nullable:False
         /// </summary>           
         public string Name { get; set; }
 
         /// <summary>
-        /// Desc:昵称
+        /// Desc:昵称 系统中展示的名称
         /// Default:
         /// Nullable:True
         /// </summary>           
@@ -62,9 +62,11 @@ namespace Entity
         /// </summary>           
         public string HeadImgUrl { get; set; }
 
+
         /// <summary>
         /// 个性签名
         /// </summary>
+        [SugarColumn(IsIgnore = true)]
         public string Signature { get; set; }
 
         /// <summary>
@@ -73,7 +75,6 @@ namespace Entity
         /// Nullable:True
         /// </summary>           
         public string UnionId { get; set; }
-        public string OpenIds { get; set; }
 
         /// <summary>
         /// Desc:性别 1男 2女 0未知

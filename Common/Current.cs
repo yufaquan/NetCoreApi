@@ -6,8 +6,10 @@
         /// 当前访问的用户token
         /// 在访问结束、抛出异常后销毁
         /// </summary>
-        public static string CurrentUserToken { get; set; }
-        public static int? CurrentUserId { get; set; }
+        public static string UserToken { get; set; }
+        public static int? UserId { get; set; }
+
+        public static string UserJson { get; set; }
 
 
         /// <summary>
@@ -15,8 +17,9 @@
         /// </summary>
         public static void Clear()
         {
-            CurrentUserToken = null;
-            CurrentUserId = null;
+            UserToken = null;
+            UserId = null;
+            UserJson = null;
             //userToken = null;
             //user = null;
         }

@@ -119,7 +119,45 @@ namespace SqlSugar
         {
             var t = GetById(id);
             t.IsDeleted = true;
+            t.DeletedAt = DateTime.Now;
+            t.DeletedBy = Current.UserId;
             return CurrentDb.Update(t);
+        }
+
+
+        /// <summary>
+        /// 逻辑删除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual bool Delete(List<int> ids)
+        {
+            List<T> list = new List<T>();
+            foreach (var id in ids)
+            {
+                var t = GetById(id);
+                t.IsDeleted = true;
+                t.DeletedAt = DateTime.Now;
+                t.DeletedBy = Current.UserId;
+                list.Add(t);
+            }
+            return CurrentDb.UpdateRange(list);
+        }
+
+        /// <summary>
+        /// 逻辑删除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual bool Delete(List<T> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].IsDeleted = true;
+                list[i].DeletedAt = DateTime.Now;
+                list[i].DeletedBy = Current.UserId;
+            }
+            return CurrentDb.UpdateRange(list);
         }
 
 
@@ -131,8 +169,27 @@ namespace SqlSugar
         public virtual bool Update(T obj)
         {
             obj.ModifiedAt = DateTime.Now;
-            obj.ModifiedBy = Current.CurrentUserId;
+            obj.ModifiedBy = Current.UserId;
             return CurrentDb.Update(obj);
+        }
+
+        /// <summary>
+        /// 根据实体更新，实体需要有主键
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual T UpdateT(T obj)
+        {
+            obj.ModifiedAt = DateTime.Now;
+            obj.ModifiedBy = Current.UserId;
+            if (CurrentDb.Update(obj))
+            {
+                return GetById(obj.Id);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -153,8 +210,20 @@ namespace SqlSugar
         public virtual int Insert(T obj)
         {
             obj.CreatedAt = DateTime.Now;
-            obj.CreatedBy = Current.CurrentUserId;
-            return CurrentDb.InsertReturnIdentity(obj);
+            obj.CreatedBy = Current.UserId;
+            return  CurrentDb.InsertReturnIdentity(obj);
+        }
+        /// <summary>
+        /// 插入
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual T InsertT(T obj)
+        {
+            obj.CreatedAt = DateTime.Now;
+            obj.CreatedBy = Current.UserId;
+            var id= Db.Insertable(obj).ExecuteReturnIdentity();
+            return GetById(id);
         }
 
 

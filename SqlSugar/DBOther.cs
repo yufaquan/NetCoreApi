@@ -32,6 +32,7 @@ namespace SqlSugar
 
         public static DBOther Init { get => new DBOther(); }
 
+        
 
     }
 }

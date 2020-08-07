@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -36,6 +37,18 @@ namespace Common
             if (string.IsNullOrWhiteSpace(input))
                 return input;
             return input.First().ToString().ToUpper() + input.Substring(1);
+        }
+
+
+        /// <summary>
+        /// 将字符串按特定字符切割成字符串数组
+        /// </summary>
+        /// <param name="str">需要切割的字符串</param>
+        /// <param name="s">指定字符</param>
+        /// <returns></returns>
+        public static string[] Split(string str,char s)
+        {
+            return str.Split(new char[] { s }, StringSplitOptions.RemoveEmptyEntries);
         }
 
     }

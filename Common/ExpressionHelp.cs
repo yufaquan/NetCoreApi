@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -13,6 +14,10 @@ namespace Common
         #region 拉姆达表达式
         private static Expression<T> Combine<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
         {
+            if (first==null)
+            {
+                return null;
+            }
             MyExpressionVisitor visitor = new MyExpressionVisitor(first.Parameters[0]);
             Expression bodyone = visitor.Visit(first.Body);
             Expression bodytwo = visitor.Visit(second.Body);
@@ -27,6 +32,10 @@ namespace Common
         /// <returns></returns>
         public static Expression<Func<T, bool>> ExpressionAnd<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
+            if (first == null)
+            {
+                return null;
+            }
             return first.Combine(second, Expression.And);
         }
         /// <summary>
@@ -38,6 +47,10 @@ namespace Common
         /// <returns></returns>
         public static Expression<Func<T, bool>> ExpressionOr<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
+            if (first == null)
+            {
+                return null;
+            }
             return first.Combine(second, Expression.Or);
         }
 
@@ -69,6 +82,8 @@ namespace Common
         }
         #endregion
 
+
+        #region json
         /// <summary>
         /// 转化为json字符串 
         /// </summary>
@@ -91,6 +106,32 @@ namespace Common
         }
 
         /// <summary>
+        /// 将json字符串转化为实体,如果字符串为空或者转换失败，则返回默认类型
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static T JsonToModelOrDefault<T>(this string str) where T : class, new()
+        {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return new T();
+            }
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(str);
+            }
+            catch (Exception ex)
+            {
+                return new T();
+            }
+        }
+
+        #endregion
+
+        #region 时间
+
+        /// <summary>
         /// 获取日期格式为yyyy/MM/dd HH:mm:ss
         /// </summary>
         /// <param name="dt"></param>
@@ -100,8 +141,94 @@ namespace Common
             return dt.ToString("yyyy/MM/dd HH:mm:ss");
         }
 
+        #endregion
 
-      
+
+        #region 字符串
+
+        /// <summary>
+        /// 判断字符串中是否存在某些字符
+        /// </summary>
+        /// <param name="str">要判断的字符串</param>
+        /// <param name="arr">查询的数组字符</param>
+        /// <param name="isqfdx">是否考虑大小写，默认不考虑</param>
+        /// <returns>有一个存在则返回 True.</returns>
+        public static bool IsHaveStr(this string str,string[] arr,bool isqfdx=false)
+        {
+            foreach (var item in arr)
+            {
+                if (isqfdx)
+                {
+                    if (str.Contains(item))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (str.ToLower().Contains(item.ToLower()))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 判断字符串是否等于其中一个字符串
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="arr">要判断的字符串</param>
+        /// <param name="isqfdx">是否区分大小写，默认不区分</param>
+        /// <returns>只要有一个相等则返回 True.</returns>
+        public static bool AsStrs(this string str, string[] arr, bool isqfdx = false)
+        {
+            foreach (var item in arr)
+            {
+                if (isqfdx)
+                {
+                    if (str == item)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (str.ToLower() == item.ToLower())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+
+        /// <summary>
+        /// 将字符串按特定字符切割成字符串数组
+        /// </summary>
+        /// <param name="str">需要切割的字符串</param>
+        /// <param name="s">指定字符</param>
+        /// <returns></returns>
+        public static string[] ToArr(this string str, char s)
+        {
+            return str.Split(new char[] { s }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+
+        /// <summary>
+        /// 将字符串按特定字符切割成字符串数组
+        /// </summary>
+        /// <param name="str">需要切割的字符串</param>
+        /// <param name="s">指定字符</param>
+        /// <returns></returns>
+        public static List<string> ToList(this string str, char s)
+        {
+            return str.Split(new char[] { s }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        }
+
+        #endregion
 
     }
 

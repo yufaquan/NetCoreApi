@@ -13,8 +13,7 @@ using System.Linq.Expressions;
 
 namespace NetCoreAPI.Controllers.Portal
 {
-    [Route("api/[controller]")]
-    [Authorize]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
@@ -36,7 +35,7 @@ namespace NetCoreAPI.Controllers.Portal
         // GET api/<ValuesController>/5
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string GetById(int id)
         {
             _redisCache.Set("abcde", new { a = 1, b = 2 },TimeSpan.FromMinutes(5), new TimeSpan(0,5,0));
             return "value";

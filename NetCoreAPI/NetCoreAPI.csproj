@@ -26,10 +26,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Authorization\Authorization.csproj" />
+    <ProjectReference Include="..\Bussiness\Bussiness.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Entity\Entity.csproj" />
-    <ProjectReference Include="..\Log\Log.csproj" />
-    <ProjectReference Include="..\Service\Service.csproj" />
   </ItemGroup>
 
 

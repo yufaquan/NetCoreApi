@@ -71,5 +71,25 @@ namespace Entity
             /// </summary>
             Other
         }
+
+        /// <summary>
+        /// 日志等级
+        /// </summary>
+        public enum LogLevel
+        {
+            /// <summary>
+            /// 一般信息
+            /// </summary>
+            Info,
+            /// <summary>
+            /// 错误日志
+            /// </summary>
+            Error,
+            /// <summary>
+            /// 警告日志
+            /// </summary>
+            Warning
+        }
+
     }
 }

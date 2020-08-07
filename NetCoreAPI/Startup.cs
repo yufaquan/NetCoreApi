@@ -201,9 +201,11 @@ namespace NetCoreAPI
             //认证服务
             //services.AddSingleton<IAuthorizationHandler, PolicyHandler>();
 
-            services.AddScoped<Current>();
 
-            services.AddCors();
+            //services.AddCors();
+
+            //主要用于获取客户端ip
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         }
 
@@ -228,13 +230,13 @@ namespace NetCoreAPI
                 endpoints.MapControllers();
             });
 
-            //跨域
-            app.UseCors(builder => builder
-              .AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowCredentials()
-              );
+            ////跨域
+            //app.UseCors(builder => builder
+            //  .AllowAnyOrigin()
+            //  .AllowAnyMethod()
+            //  .AllowAnyHeader()
+            //  .AllowCredentials()
+            //  );
 
             #region Swagger
             app.UseSwagger();

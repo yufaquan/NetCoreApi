@@ -1,4 +1,5 @@
-﻿using Entity;
+﻿using Common;
+using Entity;
 using IService;
 using SqlSugar;
 using System;
@@ -8,66 +9,99 @@ using System.Text;
 
 namespace Service
 {
-    public class UserService : DbContext<User>, IUserService
+    public class UserService :  IUserService
     {
+        private DbContext<User> db;
+        public UserService()
+        {
+            db = new DbContext<User>();
+        }
         public User Add(User t)
         {
-            throw new NotImplementedException();
+            return db.InsertT(t);
         }
 
         public bool Add(List<User> list)
         {
-            throw new NotImplementedException();
+            if (list!=null)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].CreatedAt = DateTime.Now;
+                    list[i].CreatedBy = Current.UserId;
+                }
+                return db.Insert(list);
+            }
+            return false;
+        }
+
+        public void BeginTran()
+        {
+            db.BeginTran();
+        }
+
+        public void CommitTran()
+        {
+            db.CommitTran();
         }
 
         public bool Delete(User t)
         {
-            throw new NotImplementedException();
+            return db.Delete(t.Id);
         }
 
         public bool Delete(List<User> list)
         {
-            throw new NotImplementedException();
+            return db.Delete(list);
         }
 
-        public bool Delete(List<dynamic> idList)
+        public bool Delete(List<int> idList)
         {
-            throw new NotImplementedException();
+            return db.Delete(idList);
         }
 
-        public bool DeleteById(dynamic id)
+        public bool DeleteById(int id)
         {
-            throw new NotImplementedException();
+            return db.Delete(id);
         }
 
         public User Edit(User t)
         {
-            throw new NotImplementedException();
+            return db.UpdateT(t);
         }
 
         public bool Edit(List<User> list)
         {
-            throw new NotImplementedException();
+            return db.Update(list);
+        }
+
+        public IList<User> GetAllList(Expression<Func<User, bool>> whereExpression)
+        {
+            if (whereExpression==null)
+            {
+                return db.GetList();
+            }
+            return db.GetList(whereExpression);
         }
 
         public User GetBy(Expression<Func<User, bool>> whereExpression)
         {
-            throw new NotImplementedException();
+            return db.GetSingle(whereExpression);
         }
 
-        public User GetById(dynamic id)
+        public User GetById(int id)
         {
-            throw new NotImplementedException();
+            return db.GetById(id);
         }
 
         public IList<User> GetPageList(Expression<Func<User, bool>> whereExpression, int pageIndex, int pageSize, ref int pageCount, Expression<Func<User, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
         {
-            throw new NotImplementedException();
+            return db.GetPageList(whereExpression, new PageModel() { PageIndex = pageIndex, PageSize = pageSize }, ref pageCount, orderByExpression, orderByType);
         }
 
-        IList<User> IServiceBase<User>.GetList(Expression<Func<User, bool>> whereExpression)
+        public void RollbackTran()
         {
-            throw new NotImplementedException();
+            db.RollbackTran();
         }
     }
 }

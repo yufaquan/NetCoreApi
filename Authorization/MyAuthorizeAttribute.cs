@@ -19,6 +19,10 @@ namespace Authorization
             list.Add(type.ToString());
         }
 
+        /// <summary>
+        /// 获取权限list
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetStingList()
         {
             return list;

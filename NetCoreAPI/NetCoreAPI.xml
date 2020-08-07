@@ -24,12 +24,21 @@
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:NetCoreAPI.AuthHelp.ManageVerifyAttribute.IsHaveAuthorize(System.String,System.Type)">
+        <member name="M:NetCoreAPI.AuthHelp.ManageVerifyAttribute.IsHaveVisitToken(System.String,System.Type)">
+            <summary>
+            判断是否需要访问令牌
+            </summary>
+            <param name="actionName"></param>
+            <param name="t"></param>
+            <returns>true：需要；</returns>
+        </member>
+        <member name="M:NetCoreAPI.AuthHelp.ManageVerifyAttribute.IsHaveAuthorize(System.String,System.Type,System.String@)">
             <summary>
             判断是否有权限
             </summary>
             <param name="actionname">方法名</param>
             <param name="t">Controller类型</param>
+            <param name="errorMessage">Controller类型</param>
             <returns>true：有权限；</returns>
         </member>
         <member name="T:NetCoreAPI.ExceptionActionFilter">
@@ -39,7 +48,7 @@
         </member>
         <member name="M:NetCoreAPI.ExceptionActionFilter.WriteLog(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
             <summary>
-            写入日志（log4net）
+            写入日志
             </summary>
             <param name="context">提供使用</param>
         </member>
@@ -51,145 +60,6 @@
         <member name="T:NetCoreAPI.UserFriendlyException">
             <summary>
             用户友好异常
-            </summary>
-        </member>
-        <member name="T:NetCoreAPI.ExceptionMessage">
-            <summary>
-            异常错误信息
-            </summary>
-        </member>
-        <member name="M:NetCoreAPI.ExceptionMessage.#ctor(System.Exception)">
-            <summary>
-            构造函数
-            默认显示异常页面
-            </summary>
-            <param name="ex">异常对象</param>
-        </member>
-        <member name="M:NetCoreAPI.ExceptionMessage.#ctor(System.Exception,System.Boolean)">
-            <summary>
-            构造函数
-            </summary>
-            <param name="ex">异常对象</param>
-            <param name="isShowException">是否显示异常页面</param>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.MsgType">
-            <summary>
-            消息类型
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.Message">
-            <summary>
-            消息内容
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.Path">
-            <summary>
-            请求路径
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.Assembly">
-            <summary>
-            程序集名称
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.ActionArguments">
-            <summary>
-            异常参数
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.HttpMethod">
-            <summary>
-            请求类型
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.StackTrace">
-            <summary>
-            异常堆栈
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.Source">
-            <summary>
-            异常源
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.IP">
-            <summary>
-            服务器IP 端口
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.UserAgent">
-            <summary>
-            客户端浏览器标识
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.ShowException">
-            <summary>
-            是否显示异常界面
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.Time">
-            <summary>
-            异常发生时间
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.ExceptionMessage.Method">
-            <summary>
-            异常发生方法
-            </summary>
-        </member>
-        <member name="T:NetCoreAPI.AjaxResult">
-            <summary>
-            表示Ajax操作结果
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.AjaxResult.type">
-            <summary>
-            获取 Ajax操作结果类型
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.AjaxResult.errorcode">
-            <summary>
-            获取 Ajax操作结果编码
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.AjaxResult.message">
-            <summary>
-            获取 消息内容
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.AjaxResult.resultdata">
-            <summary>
-            获取 返回数据
-            </summary>
-        </member>
-        <member name="T:NetCoreAPI.ResultType">
-            <summary>
-            表示 ajax 操作结果类型的枚举
-            </summary>
-        </member>
-        <member name="F:NetCoreAPI.ResultType.info">
-            <summary>
-            消息结果类型
-            </summary>
-        </member>
-        <member name="F:NetCoreAPI.ResultType.success">
-            <summary>
-            成功结果类型
-            </summary>
-        </member>
-        <member name="F:NetCoreAPI.ResultType.warning">
-            <summary>
-            警告结果类型
-            </summary>
-        </member>
-        <member name="F:NetCoreAPI.ResultType.error">
-            <summary>
-            异常结果类型
-            </summary>
-        </member>
-        <member name="T:NetCoreAPI.ServiceHelp">
-            <summary>
-            服务帮助类
             </summary>
         </member>
         <member name="T:NetCoreAPI.Controllers.WeatherForecastController">

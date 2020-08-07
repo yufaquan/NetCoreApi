@@ -19,7 +19,8 @@ namespace Authorization
         public static string WriteVisitToken(string to = "everyOne")
         {
             var visit = new VisitToken() { ETime=TimeSpan.FromHours(12), From= _from, STime=DateTime.Now, To= to, ZZ= _zz };
-            return CryptoHelper.Encrypt(visit.ToJsonString(), Config.VisitTokenSY);
+            return MySecurity.SEncryptString(visit.ToJsonString(), Config.VisitTokenSY);
+            //return SecurityHelp.Init.Encrypto(visit.ToJsonString());
         }
 
         /// <summary>
@@ -30,7 +31,8 @@ namespace Authorization
         public static VisitToken ReadVisitTokenByTokenStr(string tokenStr)
         {
             //解密
-            var token_json = CryptoHelper.Decrypt(tokenStr, Config.VisitTokenSY);
+            var token_json = MySecurity.SDecryptString(tokenStr, Config.VisitTokenSY);
+            //var token_json = SecurityHelp.Init.Decrypto(tokenStr);
             return token_json.JsonToModel<VisitToken>();
         }
 
@@ -87,7 +89,8 @@ namespace Authorization
         {
             var ut = new UserToken() { ITime = DateTime.Now, UserId = userId,Sign=Config.UserTokenSign };
             ICacheManager cache = CacheService.GetCacheManager();
-            var jmStr= CryptoHelper.Encrypt(ut.ToJsonString(), Config.UserTokenSY);
+            var jmStr = MySecurity.SEncryptString(ut.ToJsonString(), Config.UserTokenSY);
+            //var jmStr = SecurityHelp.Init.Encrypto(ut.ToJsonString());
             //判断是否已存在缓存
             //若存在 则覆盖
             var cacheKey = GetUserCacheKey(userId);
@@ -106,7 +109,8 @@ namespace Authorization
         /// <returns></returns>
         public static UserToken ReadUserTokenByTokenStr(string tokenStr)
         {
-            var json = CryptoHelper.Decrypt(tokenStr, Config.UserTokenSY);
+            var json = MySecurity.SDecryptString(tokenStr, Config.UserTokenSY);
+            //var json = SecurityHelp.Init.Decrypto(tokenStr);
             return json.JsonToModel<UserToken>();
         }
 
@@ -167,7 +171,9 @@ namespace Authorization
         private static string GetUserCacheKey(int userId)
         {
             string key = new { id = userId, key = Config.UserTokenSY }.ToJsonString();
-            return CryptoHelper.Encrypt(key, Config.UserTokenSY);
+            //加密
+            return MySecurity.SEncryptString(key);
+            //return SecurityHelp.Init.Encrypto(key);
         }
     }
 }
