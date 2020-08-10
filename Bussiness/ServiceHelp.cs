@@ -21,5 +21,10 @@ namespace Bussiness
         /// 获取日志服务
         /// </summary>
         public static LogService GetLogService { get => new LogService(); }
+
+        /// <summary>
+        /// 获取角色服务
+        /// </summary>
+        public static IRoleService GetRoleService { get => new RoleService(); }
     }
 }

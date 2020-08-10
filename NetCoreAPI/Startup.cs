@@ -52,7 +52,7 @@ namespace NetCoreAPI
                 c.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
                     Version = "v1.1.0",
-                    Title = "YuFaquan WebAPI",
+                    Title = "YuFaquan API",
                     Description = "desc",
                     TermsOfService = new Uri("https://yufaquan.cn"),
                     Contact = new Microsoft.OpenApi.Models.OpenApiContact() { 
@@ -206,6 +206,9 @@ namespace NetCoreAPI
 
             //主要用于获取客户端ip
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //注册权限
+            AuthorizationService.LoadAuthorize();
 
         }
 

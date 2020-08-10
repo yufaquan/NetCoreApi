@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Authorization;
 using Common.Cache;
 using System.Linq.Expressions;
+using Entity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,6 +26,7 @@ namespace NetCoreAPI.Controllers.Portal
         }
 
         // GET: api/<ValuesController>
+        [MyAuthorize(typeof(Read<User>))]
         [HttpGet]
         public IEnumerable<string> Get()
         {

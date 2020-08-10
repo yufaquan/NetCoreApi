@@ -1,5 +1,6 @@
 ﻿using Authorization;
 using Bussiness;
+using Bussiness.Mangement;
 using Common;
 using Entity;
 using Microsoft.AspNetCore.Authorization;
@@ -124,14 +125,21 @@ namespace NetCoreAPI.AuthHelp
             #region 获取请求参数
             if (request.Method.AsStrs(new string[] {"put","post" }))
             {
-                if (request.Form != null && request.Form.Count > 0)
+                try
                 {
-                    rp.Append("{");
-                    foreach (var item in request.Form.Keys)
+                    if (request.Form != null && request.Form.Count > 0)
                     {
-                        rp.Append($"\"{item}\":\"{request.Form[item]}\",");
+                        rp.Append("{");
+                        foreach (var item in request.Form.Keys)
+                        {
+                            rp.Append($"\"{item}\":\"{request.Form[item]}\",");
+                        }
+                        rp.Append("}");
                     }
-                    rp.Append("}");
+                }
+                catch (Exception)
+                {
+
                 }
             }
             else if (request.Query != null && request.Query.Count > 0)
@@ -233,19 +241,24 @@ namespace NetCoreAPI.AuthHelp
             {
                 return false;
             }
+            var ups = Commons.Split(user.Permissions, ',');
             //系统管理员角色和超级管理员拥有全部权限
             if (user.Id==1 || user.RoleIds.ToList(',').Exists(x=>x=="1"))
             {
                 return true;
             }
-            var ups = Commons.Split(user.Permissions, ',');
+            //获取用户角色的权限
+            List<string> rlist = RoleBussiness.Init.GetRolePermissionsByUserId(user.Id,out errorMessage);
+
+            var permissions = ups.Union(rlist);
+
             ////判断是否有权限
             foreach (var item in attrs)
             {
                 var authorizeList = item.GetStingList();
                 foreach (var authorize in authorizeList)
                 {
-                    if (ups.Contains(authorize))
+                    if (permissions.Contains(authorize))
                     {
                         return true;
                     }

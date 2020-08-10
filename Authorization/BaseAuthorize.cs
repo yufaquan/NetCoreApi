@@ -38,10 +38,10 @@ namespace Authorization
     {
         public override string Text => "删除";
     }
-    [YDisplay("权限")]
+    [YDisplay("权限管理")]
     public class Authorize<T> : BaseAuthorize<T> where T : class
     {
-        public override string Text => "权限";
+        public override string Text => "权限管理";
     }
 
 
@@ -94,10 +94,23 @@ namespace Authorization
             return result;
         }
 
+        public static List<string> GetAuthorizeStringListSecurity()
+        {
+            List<string> result = new List<string>();
+            if (authorizeList != null)
+            {
+                foreach (var item in authorizeList)
+                {
+                    result.Add(MySecurity.SEncryptString(item.GetString()));
+                }
+            }
+            return result;
+        }
+
         /// <summary>
         /// 读取权限名称
         /// </summary>
-        /// <returns></returns>
+        /// <returns>(类名,(权限名称，权限值))</returns>
         public static Dictionary<string, Dictionary<string, string>> GetTextAndString()
         {
             var result = new Dictionary<string, Dictionary<string, string>>();
@@ -116,6 +129,34 @@ namespace Authorization
                 {
                     var cdata = new Dictionary<string, string>();
                     cdata.Add(aName, item.GetString());
+                    result.Add(className, cdata);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 读取权限名称
+        /// </summary>
+        /// <returns>(类名,(权限名称，权限值))</returns>
+        public static Dictionary<string, Dictionary<string, string>> GetTextAndStringSecurity()
+        {
+            var result = new Dictionary<string, Dictionary<string, string>>();
+            foreach (var item in authorizeList)
+            {
+                var className = item.Value.GetDisplayName();//类名
+                var aName = item.Key.GetDisplayName();//权限名称
+                if (result.ContainsKey(className))
+                {
+                    if (!result[className].ContainsKey(aName))
+                    {
+                        result[className].Add(aName, MySecurity.SEncryptString(item.GetString()));
+                    }
+                }
+                else
+                {
+                    var cdata = new Dictionary<string, string>();
+                    cdata.Add(aName, MySecurity.SEncryptString(item.GetString()));
                     result.Add(className, cdata);
                 }
             }

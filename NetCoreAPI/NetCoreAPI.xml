@@ -62,42 +62,47 @@
             用户友好异常
             </summary>
         </member>
-        <member name="T:NetCoreAPI.Controllers.WeatherForecastController">
+        <member name="M:NetCoreAPI.AuthorizationService.LoadAuthorize">
             <summary>
-            天气测试模块
+            注册权限
             </summary>
         </member>
-        <member name="M:NetCoreAPI.Controllers.WeatherForecastController.Get(System.Int32)">
+        <member name="T:NetCoreAPI.Controllers.Management.AuthorizationController">
             <summary>
-            测试天气
+            权限
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.AuthorizationController.GetAllAuthorization">
+            <summary>
+            获取所有权限字典
             </summary>
             <returns></returns>
         </member>
-        <member name="M:NetCoreAPI.Controllers.WeatherForecastController.GetJWT">
+        <member name="M:NetCoreAPI.Controllers.Management.AuthorizationController.GetAllAuthorizationStringList">
+            <summary>
+            获取所有权限值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetCoreAPI.Controllers.Management.LoginController">
+            <summary>
+            登录
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.LoginController.LoginByPwd(System.String,System.String)">
+            <summary>
+            帐号密码登录
+            </summary>
+            <param name="name">帐号</param>
+            <param name="pwd">密码</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Portal.GetVisitTokenController.Get">
             <summary>
             获取访问token
+            JWT授权(数据将在请求头中进行传输) 参数结构: "Authorization: Bearer {token}"
             </summary>
             <returns></returns>
-        </member>
-        <member name="T:NetCoreAPI.Controllers.WeatherForecast">
-            <summary>
-            天气
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.Controllers.WeatherForecast.Date">
-            <summary>
-            时间
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.Controllers.WeatherForecast.TemperatureC">
-            <summary>
-            aa
-            </summary>
-        </member>
-        <member name="P:NetCoreAPI.Controllers.WeatherForecast.Summary">
-            <summary>
-            天气
-            </summary>
         </member>
     </members>
 </doc>
