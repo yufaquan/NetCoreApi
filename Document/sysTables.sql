@@ -28,6 +28,31 @@ create table `sys_user`(
 
 
 
+
+-- ----------------------------
+-- Table structure for sys_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_menu`;
+CREATE TABLE `sys_menu` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `PId` int(11) default 0 NULL comment '上级菜单Id 一级菜单默人为0',
+  `Name` varchar(255) NOT NULL comment '菜单名称',
+  `Url` varchar(255) NULL comment '菜单路径 一级菜单不填',
+  `Permissions` varchar(5000) DEFAULT NULL comment '读取菜单所需权限',
+  `Description` varchar(500) DEFAULT NULL comment '菜单描述',
+  `Hide` tinyint not null default 0 comment '是否隐藏 默认不隐藏 0',
+  `CreatedBy` int(32) DEFAULT NULL,
+  `CreatedTime` datetime DEFAULT NULL,
+  `ModifiedBy` int(32) DEFAULT NULL,
+  `ModifiedTime` datetime DEFAULT NULL,
+  `DeletedBy` int(32) DEFAULT NULL,
+  `DeletedTime` datetime DEFAULT NULL,
+	`isDeleted` tinyint not null default 0,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单';
+
+
+
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
@@ -44,7 +69,7 @@ CREATE TABLE `sys_role` (
   `ModifiedTime` datetime DEFAULT NULL,
   `DeletedBy` int(32) DEFAULT NULL,
   `DeletedTime` datetime DEFAULT NULL,
-  `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
+	`isDeleted` tinyint not null default 0,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色';
 
