@@ -100,19 +100,43 @@ namespace NetCoreAPI
                             new string[] { }
                         }
                 });
+                //添加用户usertoken
+                c.AddSecurityDefinition("UserToken", new OpenApiSecurityScheme
+                {
+                    Description = "用户信息授权(数据将在请求头中进行传输) 参数结构: \"UserToken:{token}\"",
+                    Name = "UserToken",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    BearerFormat = "UT",
+                    Scheme = "UserToken"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                 {
+                   {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "UserToken"
+                            }
+                        },
+                            new string[] { }
+                        }
+                });
 
             });
             #endregion
 
-            //注册缓存
-            if (Common.Config.IsOpenRedis.ToLower()=="true")
+            #region 注册缓存
+            if (Common.Config.IsOpenRedis.ToLower() == "true")
             {
                 services.AddSingleton<ICacheManager, RedisCacheManager>();
             }
             else
             {
                 services.AddSingleton<ICacheManager, MyMemoryCache>();
-            }
+            } 
+            #endregion
 
             #region 身份验证
             //身份验证

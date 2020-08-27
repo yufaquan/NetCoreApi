@@ -45,14 +45,24 @@ public class HttpResult
         return new HttpResult() { Code = (int)code, Message = message, Data = data };
     }
     /// <summary>
-    /// 用户token校验失败
+    /// 其它错误返回
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static HttpResult Other( string message, object data)
+    {
+        return new HttpResult() { Code = (int)HttpResultCode.Other, Message = message, Data = data };
+    }
+    /// <summary>
+    /// 重新登录
     /// </summary>
     /// <param name="data"></param>
     /// <param name="errorMessage"></param>
     /// <returns></returns>
-    public static HttpResult UserTokenFail(object data,string errorMessage)
+    public static HttpResult AginLogin(object data,string errorMessage)
     {
-        return new HttpResult() { Code = (int)HttpResultCode.Success, Message = errorMessage, Data = data };
+        return new HttpResult() { Code = (int)HttpResultCode.AginLogin, Message = errorMessage + "请重新登录。", Data = data };
     }
 }
 
@@ -73,5 +83,20 @@ public enum HttpResultCode
     /// 新增失败
     /// </summary>
     [Display(Name = "新增失败")]
-    AddFail = 1
+    AddFail = 3,
+    /// <summary>
+    /// 登录失败
+    /// </summary>
+    [Display(Name = "登录失败")]
+    LoginFail = 1,
+    /// <summary>
+    /// 重新登录
+    /// </summary>
+    [Display(Name = "重新登录")]
+    AginLogin = 2,
+    /// <summary>
+    /// 其它错误，具体错误信息请查看详情
+    /// </summary>
+    [Display(Name = "其它错误")]
+    Other = 102
 }

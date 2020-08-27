@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Authorization;
 using Bussiness;
+using Bussiness.Mangement;
 using Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +22,24 @@ namespace NetCoreAPI.Controllers.Management
         /// 获取所有菜单
         /// </summary>
         /// <returns></returns>
+        [MyAuthorize(typeof(Read<Menus>))]
         [HttpGet]
         public JsonResult GetAllList()
         {
             var list = ServiceHelp.GetMenuService.GetAllList(null);
+            list = list == null ? new List<Menus>() : list;
+            return new JsonResult(HttpResult.Success(new { list = list }));
+        }
+
+        /// <summary>
+        /// 获取当前用户有权限的菜单
+        /// </summary>
+        /// <returns></returns>
+        [MyAuthorize(typeof(Read<Menus>))]
+        [HttpGet]
+        public JsonResult GetHavePermissionsList()
+        {
+            var list = MenusBussiness.Init.GetHavePermissionsList();
             list = list == null ? new List<Menus>() : list;
             return new JsonResult(HttpResult.Success(new { list = list }));
         }

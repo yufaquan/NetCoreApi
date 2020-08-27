@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,6 +83,18 @@ namespace NetCoreAPI.AuthHelp
                 Current.UserToken = string.Empty;
             }
 
+            //判断是否需要检验登录
+            if (IsCheckLogin(t,actionname))
+            {
+                User user;
+                //判断是否登录
+                if (!IsLogin(out user,out errorMessage))
+                {
+                    context.Result = new JsonResult(HttpResult.AginLogin(null, errorMessage));
+                    return;
+                }
+            }
+
             //是否有权限
             if (!IsHaveAuthorize(actionname, t, out errorMessage))
             {
@@ -90,7 +103,7 @@ namespace NetCoreAPI.AuthHelp
             }
             if (!string.IsNullOrWhiteSpace(errorMessage))
             {
-                context.Result = new JsonResult(HttpResult.UserTokenFail(new { }, errorMessage + "请重新登录。"));
+                context.Result = new JsonResult(HttpResult.AginLogin(new { }, errorMessage));
             }
             #endregion
             //成功访问
@@ -139,7 +152,15 @@ namespace NetCoreAPI.AuthHelp
                 }
                 catch (Exception)
                 {
-
+                    if (request.Query != null && request.Query.Count > 0)
+                    {
+                        rp.Append("{");
+                        foreach (var item in request.Query.Keys)
+                        {
+                            rp.Append($"\"{item}\":\"{request.Query[item]}\",");
+                        }
+                        rp.Append("}");
+                    }
                 }
             }
             else if (request.Query != null && request.Query.Count > 0)
@@ -164,10 +185,19 @@ namespace NetCoreAPI.AuthHelp
             #endregion
             #endregion
 
+            #region 延长UserToken的过期时间
+            if (Current.UserId.HasValue && !string.IsNullOrWhiteSpace(Current.UserToken))
+            {
+                var task1 = TokenHelp.ExtensionTimeAsync(Current.UserId.Value, Current.UserToken);
+            }
+            #endregion
+
+            //清空登录的数据
             if (context.Exception==null)
             {
                 Current.Clear();
             }
+
         }
 
 
@@ -198,6 +228,38 @@ namespace NetCoreAPI.AuthHelp
 
         }
 
+
+        /// <summary>
+        /// 判断是否登录
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="errorMessage"></param>
+        /// <returns>True：已登录；</returns>
+        private bool IsLogin(out User user,out string errorMessage)
+        {
+            user=null;
+            //检验用户token
+            int? userId;
+            if (!TokenHelp.VerifyUserToken(Current.UserToken, out userId, out errorMessage))
+            {
+                return false;
+            }
+            //记录当前用户Id
+            Current.UserId = userId;
+            //未获取到当前用户
+            if (!Current.UserId.HasValue || (Current.UserId.HasValue && Current.UserId.Value == 0))
+            {
+                return false;
+            }
+            user = ServiceHelp.GetUserService.GetById(userId.Value);
+            if (user==null)
+            {
+                return false;
+            }
+            Current.UserJson = user.ToJsonString();
+            return true;
+        }
+
         /// <summary>
         /// 判断是否有权限
         /// </summary>
@@ -220,23 +282,13 @@ namespace NetCoreAPI.AuthHelp
             {
                 return true;
             }
-
-            //检验用户token
-            int? userId;
-            if (!TokenHelp.VerifyUserToken(Current.UserToken, out userId, out errorMessage))
+            User user;
+            if (!IsLogin(out user,out errorMessage))
             {
                 return false;
             }
-            //记录当前用户Id
-            Current.UserId = userId;
-            //未获取到当前用户
-            if (!Current.UserId.HasValue || (Current.UserId.HasValue && Current.UserId.Value == 0))
-            {
-                return false;
-            }
+           
             //获取用户权限
-            var user = ServiceHelp.GetUserService.GetById(Current.UserId.Value);
-            Current.UserJson = user.ToJsonString();
             if (user==null)
             {
                 return false;
@@ -256,15 +308,53 @@ namespace NetCoreAPI.AuthHelp
             foreach (var item in attrs)
             {
                 var authorizeList = item.GetStingList();
-                foreach (var authorize in authorizeList)
+                if (UserBussiness.Init.IsHaveAuthorize(user, authorizeList, out errorMessage))
                 {
-                    if (permissions.Contains(authorize))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
         }
+
+
+        /// <summary>
+        /// 检测是否需要登录
+        /// </summary>
+        /// <param name="t">ControllerType</param>
+        /// <param name="actionname">actionName</param>
+        /// <returns>True：需要登录；</returns>
+        private bool IsCheckLogin(Type t,string actionname)
+        {
+            actionname = Commons.FirstCharToUpper(actionname);
+            bool isNeedLogin = false;
+            //判断controller是否需要登录
+            var cAttributes = t.GetCustomAttributes(typeof(CheckLoginAttribute), true) as CheckLoginAttribute[];
+            if (cAttributes.Length > 0)
+            {
+                isNeedLogin = true;
+            }
+            //判断action需要登录
+            var actionMethod = t.GetMethod(actionname);
+            if (actionMethod == null)
+            {
+                throw new Exception($"{t.FullName}控制器内未找到方法名称为“{actionname}”的方法。");
+            }
+            //查看是否需要权限控制
+            var attrs = actionMethod.GetCustomAttributes(typeof(CheckLoginAttribute ), true) as CheckLoginAttribute [];
+            if (attrs.Length > 0)
+            {
+                isNeedLogin = true;
+            }
+            var attrs1 = actionMethod.GetCustomAttributes(typeof(NotCheckLoginAttribute), false) as NotCheckLoginAttribute[];
+            if (attrs1.Length > 0)
+            {
+                isNeedLogin = false;
+            }
+
+            return isNeedLogin;
+        }
+
+
+
     }
 }

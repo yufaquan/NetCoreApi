@@ -32,6 +32,14 @@
             <param name="t"></param>
             <returns>true：需要；</returns>
         </member>
+        <member name="M:NetCoreAPI.AuthHelp.ManageVerifyAttribute.IsLogin(Entity.User@,System.String@)">
+            <summary>
+            判断是否登录
+            </summary>
+            <param name="user"></param>
+            <param name="errorMessage"></param>
+            <returns>True：已登录；</returns>
+        </member>
         <member name="M:NetCoreAPI.AuthHelp.ManageVerifyAttribute.IsHaveAuthorize(System.String,System.Type,System.String@)">
             <summary>
             判断是否有权限
@@ -40,6 +48,14 @@
             <param name="t">Controller类型</param>
             <param name="errorMessage">Controller类型</param>
             <returns>true：有权限；</returns>
+        </member>
+        <member name="M:NetCoreAPI.AuthHelp.ManageVerifyAttribute.IsCheckLogin(System.Type,System.String)">
+            <summary>
+            检测是否需要登录
+            </summary>
+            <param name="t">ControllerType</param>
+            <param name="actionname">actionName</param>
+            <returns>True：需要登录；</returns>
         </member>
         <member name="T:NetCoreAPI.ExceptionActionFilter">
             <summary>
@@ -94,7 +110,7 @@
             帐号密码登录
             </summary>
             <param name="name">帐号</param>
-            <param name="pwd">密码</param>
+            <param name="pwd">密码(MD5加密一次后传入)</param>
             <returns></returns>
         </member>
         <member name="T:NetCoreAPI.Controllers.Management.MenuController">
@@ -108,11 +124,38 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:NetCoreAPI.Controllers.Management.MenuController.GetHavePermissionsList">
+            <summary>
+            获取当前用户有权限的菜单
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:NetCoreAPI.Controllers.Management.MenuController.Add(Entity.Menus)">
             <summary>
             创建菜单
             </summary>
             <param name="menus">菜单</param>
+            <returns></returns>
+        </member>
+        <member name="T:NetCoreAPI.Controllers.Management.UserController">
+            <summary>
+            菜单
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.UserController.GetList(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取用户列表
+            </summary>
+            <param name="name">筛选条件And拼接</param>
+            <param name="pageIndex">页数</param>
+            <param name="pageSize">每页多少条</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.UserController.Add(Entity.User)">
+            <summary>
+            创建用户
+            </summary>
+            <param name="user">用户</param>
             <returns></returns>
         </member>
         <member name="M:NetCoreAPI.Controllers.Portal.GetVisitTokenController.Get">

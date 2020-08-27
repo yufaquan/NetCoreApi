@@ -14,10 +14,6 @@ namespace Common
         #region 拉姆达表达式
         private static Expression<T> Combine<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
         {
-            if (first==null)
-            {
-                return null;
-            }
             MyExpressionVisitor visitor = new MyExpressionVisitor(first.Parameters[0]);
             Expression bodyone = visitor.Visit(first.Body);
             Expression bodytwo = visitor.Visit(second.Body);
@@ -32,9 +28,17 @@ namespace Common
         /// <returns></returns>
         public static Expression<Func<T, bool>> ExpressionAnd<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
-            if (first == null)
+            if (first == null && second == null)
             {
                 return null;
+            }
+            else if (first == null && second != null)
+            {
+                return second;
+            }
+            else if (first != null && second == null)
+            {
+                return first;
             }
             return first.Combine(second, Expression.And);
         }
@@ -47,9 +51,17 @@ namespace Common
         /// <returns></returns>
         public static Expression<Func<T, bool>> ExpressionOr<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
-            if (first == null)
+            if (first == null && second == null)
             {
                 return null;
+            }
+            else if (first == null && second != null)
+            {
+                return second;
+            }
+            else if (first != null && second == null)
+            {
+                return first;
             }
             return first.Combine(second, Expression.Or);
         }
@@ -141,6 +153,33 @@ namespace Common
             return dt.ToString("yyyy/MM/dd HH:mm:ss");
         }
 
+        /// <summary>
+        /// 获取日期格式为yyyy/MM/dd HH:mm:ss
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static string ToLongString(this DateTime? dt)
+        {
+            if (dt.HasValue)
+            {
+                return dt.Value.ToString("yyyy/MM/dd HH:mm:ss");
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// 获取日期格式为yyyy/MM/dd
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static string ToShotString(this DateTime dt)
+        {
+            return dt.ToString("yyyy/MM/dd");
+        }
+
         #endregion
 
 
@@ -225,11 +264,38 @@ namespace Common
         /// <returns></returns>
         public static List<string> ToList(this string str, char s)
         {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return new List<string>();
+            }
             return str.Split(new char[] { s }, StringSplitOptions.RemoveEmptyEntries).ToList();
         }
 
         #endregion
 
+
+        #region 集合
+        /// <summary>
+        /// 判断是否有交集
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="list2"></param>
+        /// <returns>True：有交集；</returns>
+        public static bool IsHaveSame<T>(this List<T> list,List<T> list2)
+        {
+            //查看两个集合是否有交集
+            var newList=list.Intersect(list2);
+            if (newList!=null && newList.Count()>0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
     }
 
     public class MyExpressionVisitor : ExpressionVisitor

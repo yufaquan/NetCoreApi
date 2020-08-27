@@ -18,6 +18,11 @@ namespace NetCoreAPI
             AuthorizeData.Add(typeof(Create<User>), typeof(User));
             AuthorizeData.Add(typeof(Delete<User>), typeof(User));
 
+            AuthorizeData.Add(typeof(Read<Menus>), typeof(Menus));
+            AuthorizeData.Add(typeof(Update<Menus>), typeof(Menus));
+            AuthorizeData.Add(typeof(Create<Menus>), typeof(Menus));
+            AuthorizeData.Add(typeof(Delete<Menus>), typeof(Menus));
+
 
         }
     }

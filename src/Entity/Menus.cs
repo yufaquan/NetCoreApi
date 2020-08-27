@@ -43,7 +43,7 @@ namespace Entity
         /// <summary>
         /// 访问菜单所需权限
         /// </summary>
-        public List<string> Permissions { get; set; }
+        public string Permissions { get; set; }
 
         /// <summary>
         /// 子菜单
@@ -53,7 +53,7 @@ namespace Entity
         /// <summary>
         /// 菜单描述
         /// </summary>
-        public string description { get; set; }
+        public string Description { get; set; }
 
     }
 

@@ -74,7 +74,7 @@ namespace Common.Cache
 
         public string GetValue(string key)
         {
-            return redisConnection.GetDatabase().StringGet(key);
+            return Get<string>(key);
         }
 
         public TEntity Get<TEntity>(string key)

@@ -4,6 +4,7 @@ using Common.Cache;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Authorization
 {
@@ -103,6 +104,42 @@ namespace Authorization
         }
 
         /// <summary>
+        /// 延长UserToken的过期时间
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <param name="jmStr">UserToken</param>
+        public static void ExtensionTime(int userId,string jmStr)
+        {
+            //若存在 则覆盖
+            ICacheManager cache = CacheService.GetCacheManager();
+            var cacheKey = GetUserCacheKey(userId);
+            if (cache.Exists(cacheKey))
+            {
+                cache.Remove(cacheKey);
+            }
+            cache.Set(cacheKey, jmStr, TimeSpan.FromMinutes(30), TimeSpan.FromMinutes(30));
+        }
+
+        /// <summary>
+        /// 延长UserToken的过期时间
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <param name="jmStr">UserToken</param>
+        public static async Task ExtensionTimeAsync(int userId, string jmStr)
+        {
+            await Task.Run(()=> {
+                //若存在 则覆盖
+                ICacheManager cache = CacheService.GetCacheManager();
+                var cacheKey = GetUserCacheKey(userId);
+                if (cache.Exists(cacheKey))
+                {
+                    cache.Remove(cacheKey);
+                }
+                cache.Set(cacheKey, jmStr, TimeSpan.FromMinutes(30), TimeSpan.FromMinutes(30));
+            });
+        }
+
+        /// <summary>
         /// 解析用户token
         /// </summary>
         /// <param name="tokenStr"></param>
@@ -124,24 +161,29 @@ namespace Authorization
         {
             UserToken ut ;
             userId = null;
+            if (string.IsNullOrWhiteSpace(tokenStr))
+            {
+                errorMessage = "UserToken为空。";
+                return false;
+            }
             try
             {
                 ut = ReadUserTokenByTokenStr(tokenStr);
             }
             catch (Exception ex)
             {
-                errorMessage = "userToken解析失败。";
+                errorMessage = "UserToken解析失败。";
                 return false;
             }
             if (ut==null)
             {
-                errorMessage = "userToken解析失败。";
+                errorMessage = "UserToken解析失败。";
                 return false;
             }
             //验证token签名
             if (ut.Sign!=Config.UserTokenSign)
             {
-                errorMessage = "userToken异常。";
+                errorMessage = "UserToken异常。";
                 return false;
             }
             var cacheKey = GetUserCacheKey(ut.UserId);
@@ -149,13 +191,13 @@ namespace Authorization
             ICacheManager cache = CacheService.GetCacheManager();
             if (!cache.Exists(cacheKey))
             {
-                errorMessage = "userToken不存在或已到期。";
+                errorMessage = "UserToken不存在或已到期。";
                 return false;
             }
             var cacheValue = cache.GetValue(cacheKey);
             if (cacheValue!=tokenStr)
             {
-                errorMessage = "userToken已失效。";
+                errorMessage = "UserToken已失效。";
                 return false;
             }
             errorMessage = string.Empty;

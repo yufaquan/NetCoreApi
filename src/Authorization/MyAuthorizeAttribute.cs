@@ -28,4 +28,14 @@ namespace Authorization
             return list;
         }
     }
+
+    /// <summary>
+    /// 检验是否登录
+    /// </summary>
+    public class CheckLoginAttribute :Attribute{ }
+
+    /// <summary>
+    /// 不检验是否登录
+    /// </summary>
+    public class NotCheckLoginAttribute : Attribute { }
 }

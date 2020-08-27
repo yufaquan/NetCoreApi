@@ -48,6 +48,10 @@ namespace Common
         /// <returns></returns>
         public static string[] Split(string str,char s)
         {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return new string[0];
+            }
             return str.Split(new char[] { s }, StringSplitOptions.RemoveEmptyEntries);
         }
 

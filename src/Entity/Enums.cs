@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Entity
@@ -14,14 +15,17 @@ namespace Entity
             /// <summary>
             /// 未知
             /// </summary>
+            [Display(Name = "未知")]
             other,
             /// <summary>
             /// 男人
             /// </summary>
+            [Display(Name ="男")]
             man,
             /// <summary>
             /// 女人
             /// </summary>
+            [Display(Name = "女")]
             woman
         }
 
@@ -33,42 +37,52 @@ namespace Entity
             /// <summary>
             /// 查看
             /// </summary>
-            Select, 
+            [Display(Name = "查看")]
+            Select,
             /// <summary>
             /// 新增
             /// </summary>
+            [Display(Name = "新增")]
             Insert,
             /// <summary>
             /// 修改
             /// </summary>
-            Update, 
+            [Display(Name = "修改")]
+            Update,
             /// <summary>
             /// 删除
             /// </summary>
-            Delete, 
+            [Display(Name = "删除")]
+            Delete,
             /// <summary>
             /// 物理删除
             /// </summary>
+            [Display(Name = "物理删除")]
             Delete_,
             /// <summary>
             /// 登录
             /// </summary>
+            [Display(Name = "登录")]
             Login,
             /// <summary>
             /// 登出
             /// </summary>
+            [Display(Name = "登出")]
             LogOut,
             /// <summary>
             /// 上传
             /// </summary>
+            [Display(Name = "上传")]
             UpLoad,
             /// <summary>
             /// 下载
             /// </summary>
+            [Display(Name = "下载")]
             DownLoad,
             /// <summary>
             /// 其它
             /// </summary>
+            [Display(Name = "其它")]
             Other
         }
 
