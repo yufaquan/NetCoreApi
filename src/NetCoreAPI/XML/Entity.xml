@@ -1,0 +1,495 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Entity</name>
+    </assembly>
+    <members>
+        <member name="P:Entity.BaseModel.Id">
+            <summary>
+            数据Id
+            </summary>
+        </member>
+        <member name="P:Entity.BaseModel.CreatedBy">
+            <summary>
+            创建人
+            </summary>
+        </member>
+        <member name="P:Entity.BaseModel.ModifiedBy">
+            <summary>
+            修改人
+            </summary>
+        </member>
+        <member name="P:Entity.BaseModel.DeletedBy">
+            <summary>
+            删除人
+            </summary>
+        </member>
+        <member name="P:Entity.BaseModel.CreatedAt">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Entity.BaseModel.ModifiedAt">
+            <summary>
+            修改时间
+            </summary>
+        </member>
+        <member name="P:Entity.BaseModel.DeletedAt">
+            <summary>
+            删除时间
+            </summary>
+        </member>
+        <member name="P:Entity.BaseModel.IsDeleted">
+            <summary>
+            是否删除
+            </summary>
+        </member>
+        <member name="T:Entity.Enums.Sex">
+            <summary>
+            性别
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.Sex.other">
+            <summary>
+            未知
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.Sex.man">
+            <summary>
+            男人
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.Sex.woman">
+            <summary>
+            女人
+            </summary>
+        </member>
+        <member name="T:Entity.Enums.EventType">
+            <summary>
+            事件类型
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.EventType.Select">
+            <summary>
+            查看
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.EventType.Insert">
+            <summary>
+            新增
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.EventType.Update">
+            <summary>
+            修改
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.EventType.Delete">
+            <summary>
+            删除
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.EventType.Delete_">
+            <summary>
+            物理删除
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.EventType.Login">
+            <summary>
+            登录
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.EventType.LogOut">
+            <summary>
+            登出
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.EventType.UpLoad">
+            <summary>
+            上传
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.EventType.DownLoad">
+            <summary>
+            下载
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.EventType.Other">
+            <summary>
+            其它
+            </summary>
+        </member>
+        <member name="T:Entity.Enums.LogLevel">
+            <summary>
+            日志等级
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.LogLevel.Info">
+            <summary>
+            一般信息
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.LogLevel.Error">
+            <summary>
+            错误日志
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.LogLevel.Warning">
+            <summary>
+            警告日志
+            </summary>
+        </member>
+        <member name="T:Entity.LogAPI">
+            <summary>
+            api访问记录表
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.StartTime">
+            <summary>
+            响应开始时间
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.EndTime">
+            <summary>
+            响应结束时间
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.Url">
+            <summary>
+            请求路径
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.HttpMethod">
+            <summary>
+            请求类型
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.LogLevel">
+            <summary>
+            日志等级
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.ElapsedTime">
+            <summary>
+            响应时长（秒）
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.RequestParameter">
+            <summary>
+            请求参数
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.ResponseParameter">
+            <summary>
+            返回参数
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.ExceptionInfo">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.UserIP">
+            <summary>
+            用户IP
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.ServiceIP">
+            <summary>
+            服务器IP
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.BrowserType">
+            <summary>
+            浏览器信息
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.UserName">
+            <summary>
+            用户名称
+            </summary>
+        </member>
+        <member name="T:Entity.LogError">
+            <summary>
+            异常错误信息
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.LogLevel">
+            <summary>
+            日志等级
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.MsgType">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.Message">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.Path">
+            <summary>
+            请求路径
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.Assembly">
+            <summary>
+            程序集名称
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.ActionArguments">
+            <summary>
+            异常参数
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.HttpMethod">
+            <summary>
+            请求类型
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.StackTrace">
+            <summary>
+            异常堆栈
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.Source">
+            <summary>
+            异常源
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.IP">
+            <summary>
+            服务器IP 端口
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.UserAgent">
+            <summary>
+            客户端浏览器标识
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.Time">
+            <summary>
+            异常发生时间
+            </summary>
+        </member>
+        <member name="P:Entity.LogError.Method">
+            <summary>
+            异常发生方法
+            </summary>
+        </member>
+        <member name="T:Entity.LogEvent">
+            <summary>
+            api访问记录表
+            </summary>
+        </member>
+        <member name="P:Entity.LogEvent.WriteDate">
+            <summary>
+            操作时间
+            </summary>
+        </member>
+        <member name="P:Entity.LogEvent.UserId">
+            <summary>
+            操作人id
+            </summary>
+        </member>
+        <member name="P:Entity.LogEvent.UserName">
+            <summary>
+            操作人名称
+            </summary>
+        </member>
+        <member name="P:Entity.LogEvent.EventType">
+            <summary>
+            操作类型
+            </summary>
+        </member>
+        <member name="P:Entity.LogEvent.Content">
+            <summary>
+            操作内容
+            </summary>
+        </member>
+        <member name="P:Entity.LogEvent.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:Entity.Menus">
+            <summary>
+            菜单
+            </summary>
+            
+        </member>
+        <member name="P:Entity.Menus.PId">
+            <summary>
+            父菜单Id
+            </summary>
+        </member>
+        <member name="P:Entity.Menus.Name">
+            <summary>
+            菜单标题
+            </summary>
+        </member>
+        <member name="P:Entity.Menus.Url">
+            <summary>
+            菜单路径 
+            </summary>
+        </member>
+        <member name="P:Entity.Menus.Hide">
+            <summary>
+            是否隐藏
+            </summary>
+        </member>
+        <member name="P:Entity.Menus.Permissions">
+            <summary>
+            访问菜单所需权限
+            </summary>
+        </member>
+        <member name="P:Entity.Menus.SubMenu">
+            <summary>
+            子菜单
+            </summary>
+        </member>
+        <member name="P:Entity.Menus.Description">
+            <summary>
+            菜单描述
+            </summary>
+        </member>
+        <member name="T:Entity.Role">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:Entity.Role.PId">
+            <summary>
+            Desc:
+            Default:
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:Entity.Role.Name">
+            <summary>
+            角色名称
+            </summary>           
+        </member>
+        <member name="P:Entity.Role.Description">
+            <summary>
+            角色描述
+            </summary>           
+        </member>
+        <member name="P:Entity.Role.Permissions">
+            <summary>
+            角色权限
+            </summary>
+        </member>
+        <member name="T:Entity.User">
+            <summary>
+            用户表
+            </summary>
+        </member>
+        <member name="P:Entity.User.Name">
+            <summary>
+            名称 可以用于登录 （一般情况下不允修改，去重）
+            </summary>
+        </member>
+        <member name="P:Entity.User.NickName">
+            <summary>
+            昵称 系统中展示的名称
+            </summary>           
+        </member>
+        <member name="P:Entity.User.PassWordMD5">
+            <summary>
+            密码（md5加密两次）
+            </summary>           
+        </member>
+        <member name="P:Entity.User.Mobile">
+            <summary>
+            手机号码
+            </summary>           
+        </member>
+        <member name="P:Entity.User.Email">
+            <summary>
+            邮箱
+            </summary>           
+        </member>
+        <member name="P:Entity.User.HeadImgUrl">
+            <summary>
+            用户头像地址
+            </summary>           
+        </member>
+        <member name="P:Entity.User.Signature">
+            <summary>
+            个性签名
+            </summary>
+        </member>
+        <member name="P:Entity.User.UnionId">
+            <summary>
+            Desc:微信开放平台唯一Id
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:Entity.User.Sex">
+            <summary>
+            Desc:性别 1男 2女 0未知
+            Default:未知
+            Nullable:False
+            </summary>           
+        </member>
+        <member name="P:Entity.User.Area">
+            <summary>
+            Desc:所在地区； 中国-湖北-武汉
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:Entity.User.CountryId">
+            <summary>
+            Desc:国家id
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:Entity.User.ProvinceId">
+            <summary>
+            Desc:省份
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:Entity.User.CityId">
+            <summary>
+            Desc:城市
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:Entity.User.DistrictId">
+            <summary>
+            Desc:
+            Default:
+            Nullable:True
+            </summary>           
+        </member>
+        <member name="P:Entity.User.Permissions">
+            <summary>
+            拥有的权限
+            </summary>
+        </member>
+        <member name="P:Entity.User.RoleIds">
+            <summary>
+            所属的角色
+            </summary>
+        </member>
+    </members>
+</doc>

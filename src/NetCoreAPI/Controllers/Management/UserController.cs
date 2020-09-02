@@ -15,7 +15,7 @@ using Common;
 namespace NetCoreAPI.Controllers.Management
 {
     /// <summary>
-    /// 菜单
+    /// 用户
     /// </summary>
     [ApiController]
     public class UserController : ManagementApiController
@@ -61,10 +61,11 @@ namespace NetCoreAPI.Controllers.Management
         [MyAuthorize(typeof(Create<User>))]
         public JsonResult Add([FromBody] User user)
         {
-            var result = ServiceHelp.GetUserService.Add(user);
+            string errorMessage;
+            var result = UserBussiness.Init.Add(user,out errorMessage);
             if (result==null)
             {
-                return new JsonResult(HttpResult.Success( HttpResultCode.AddFail,result));
+                return new JsonResult(HttpResult.Success( HttpResultCode.AddFail,errorMessage,result));
             }
             else
             {

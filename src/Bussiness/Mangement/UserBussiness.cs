@@ -168,5 +168,71 @@ namespace Bussiness.Mangement
 
             return ServiceHelp.GetUserService.GetPageList(where, pageIndex, pageSize, ref pageCount, x => x.CreatedAt, SqlSugar.OrderByType.Desc).ToList();
         }
+
+        /// <summary>
+        /// 新增数据
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="errorMessage"></param>
+        /// <returns></returns>
+        public User Add(User user,out string errorMessage)
+        {
+            errorMessage = string.Empty;
+            if (!VerifyData(user,out errorMessage))
+            {
+                return null;
+            }
+            return ServiceHelp.GetUserService.Add(user);
+        }
+
+        /// <summary>
+        /// 核查数据
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="errorMessage"></param>
+        /// <returns></returns>
+        public bool VerifyData(User user,out string errorMessage)
+        {
+            errorMessage = string.Empty;
+            if (user == null)
+            {
+                errorMessage = "未接收到数据。";
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(user.Name))
+            {
+                errorMessage = "用户名不能为空。";
+                return false;
+            }
+            else
+            {
+                var wlist = ServiceHelp.GetUserService.GetAllList(x => x.Name == user.Name);
+                if (wlist != null && wlist.Count > 0)
+                {
+                    errorMessage = "此用户名已被注册。";
+                    return false;
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(user.Email))
+            {
+                var wlist = ServiceHelp.GetUserService.GetAllList(x => x.Email == user.Email);
+                if (wlist != null && wlist.Count > 0)
+                {
+                    errorMessage = "此邮箱已被注册。";
+                    return false;
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(user.Mobile))
+            {
+                var wlist = ServiceHelp.GetUserService.GetAllList(x => x.Mobile == user.Mobile);
+                if (wlist != null && wlist.Count > 0)
+                {
+                    errorMessage = "该手机号已被注册。";
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }

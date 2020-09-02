@@ -139,7 +139,7 @@
         </member>
         <member name="T:NetCoreAPI.Controllers.Management.UserController">
             <summary>
-            菜单
+            用户
             </summary>
         </member>
         <member name="M:NetCoreAPI.Controllers.Management.UserController.GetList(System.String,System.Int32,System.Int32)">

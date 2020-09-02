@@ -21,44 +21,32 @@ namespace Entity
 
         }
         /// <summary>
-        /// Desc:名称 可以用于登录 （一般情况下不允修改，去重）
-        /// Default:
-        /// Nullable:False
-        /// </summary>           
+        /// 名称 可以用于登录 （一般情况下不允修改，去重）
+        /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Desc:昵称 系统中展示的名称
-        /// Default:
-        /// Nullable:True
+        /// 昵称 系统中展示的名称
         /// </summary>           
         public string NickName { get; set; }
 
         /// <summary>
-        /// Desc:密码（md5加密两次）
-        /// Default:
-        /// Nullable:True
+        /// 密码（md5加密两次）
         /// </summary>           
         public string PassWordMD5 { get; set; }
 
         /// <summary>
-        /// Desc:手机号码
-        /// Default:
-        /// Nullable:True
+        /// 手机号码
         /// </summary>           
         public string Mobile { get; set; }
 
         /// <summary>
-        /// Desc:邮箱
-        /// Default:
-        /// Nullable:True
+        /// 邮箱
         /// </summary>           
         public string Email { get; set; }
 
         /// <summary>
-        /// Desc:用户头像地址
-        /// Default:
-        /// Nullable:True
+        /// 用户头像地址
         /// </summary>           
         public string HeadImgUrl { get; set; }
 

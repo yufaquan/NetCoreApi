@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>F:\MyProject\GitCode\NetCoreAPI\src\NetCoreAPI\NetCoreAPI.xml</DocumentationFile>
+    <DocumentationFile>F:\MyProject\GitCode\NetCoreAPI\src\NetCoreAPI\XML\NetCoreAPI.xml</DocumentationFile>
     <OutputPath></OutputPath>
   </PropertyGroup>
 

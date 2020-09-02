@@ -72,9 +72,11 @@ namespace NetCoreAPI
                 dynamic type = new Program().GetType();
                 string basePath = Path.GetDirectoryName(type.Assembly.Location);
                 var xmlPath = Path.Combine(basePath, "NetCoreAPI.xml");
+                var xmlPath2 =  Path.Combine(basePath, "Entity.xml");
                 //c.IncludeXmlComments(xmlPath);
 
                 //添加控制器层注释（true表示显示控制器注释）
+                c.IncludeXmlComments(xmlPath2);
                 c.IncludeXmlComments(xmlPath, true);
 
                 //添加header验证信息
