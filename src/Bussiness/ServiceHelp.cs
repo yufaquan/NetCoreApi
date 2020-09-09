@@ -30,5 +30,9 @@ namespace Bussiness
         /// 获取菜单服务
         /// </summary>
         public static IMenuService GetMenuService { get => new MenuService(); }
+        /// <summary>
+        /// 获取用户扩展信息服务
+        /// </summary>
+        public static IUserInfoService GetUserInfoService { get => new UserInfoService(); }
     }
 }

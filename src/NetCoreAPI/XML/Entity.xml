@@ -139,6 +139,26 @@
             警告日志
             </summary>
         </member>
+        <member name="T:Entity.Enums.ProjectType">
+            <summary>
+            项目类型
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.ProjectType.WeChatMP">
+            <summary>
+            微信公众号
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.ProjectType.WeChatApplet">
+            <summary>
+            微信小程序
+            </summary>
+        </member>
+        <member name="F:Entity.Enums.ProjectType.ManagementAdmin">
+            <summary>
+            管理后台
+            </summary>
+        </member>
         <member name="T:Entity.LogAPI">
             <summary>
             api访问记录表
@@ -152,6 +172,11 @@
         <member name="P:Entity.LogAPI.EndTime">
             <summary>
             响应结束时间
+            </summary>
+        </member>
+        <member name="P:Entity.LogAPI.From">
+            <summary>
+            来自哪儿
             </summary>
         </member>
         <member name="P:Entity.LogAPI.Url">
@@ -337,12 +362,27 @@
         </member>
         <member name="P:Entity.Menus.Name">
             <summary>
-            菜单标题
+            菜单名称
             </summary>
         </member>
-        <member name="P:Entity.Menus.Url">
+        <member name="P:Entity.Menus.Alias">
             <summary>
-            菜单路径 
+            别名
+            </summary>
+        </member>
+        <member name="P:Entity.Menus.Redirect">
+            <summary>
+            重定向
+            </summary>
+        </member>
+        <member name="P:Entity.Menus.Path">
+            <summary>
+            虚拟路径
+            </summary>
+        </member>
+        <member name="P:Entity.Menus.Component">
+            <summary>
+            菜单真实路径 
             </summary>
         </member>
         <member name="P:Entity.Menus.Hide">
@@ -355,7 +395,12 @@
             访问菜单所需权限
             </summary>
         </member>
-        <member name="P:Entity.Menus.SubMenu">
+        <member name="P:Entity.Menus.Sort">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:Entity.Menus.Children">
             <summary>
             子菜单
             </summary>
@@ -363,6 +408,11 @@
         <member name="P:Entity.Menus.Description">
             <summary>
             菜单描述
+            </summary>
+        </member>
+        <member name="P:Entity.Menus.AlwaysShow">
+            <summary>
+            是否一直显示
             </summary>
         </member>
         <member name="T:Entity.Role">
@@ -490,6 +540,31 @@
             <summary>
             所属的角色
             </summary>
+        </member>
+        <member name="T:Entity.UserInfo">
+            <summary>
+            用户扩展信息
+            </summary>
+        </member>
+        <member name="P:Entity.UserInfo.UserId">
+            <summary>
+            用户Id
+            </summary>           
+        </member>
+        <member name="P:Entity.UserInfo.OpenId">
+            <summary>
+            项目唯一标识
+            </summary>           
+        </member>
+        <member name="P:Entity.UserInfo.ProjectId">
+            <summary>
+            项目id
+            </summary>           
+        </member>
+        <member name="P:Entity.UserInfo.ProjectType">
+            <summary>
+            角色名称
+            </summary>           
         </member>
     </members>
 </doc>

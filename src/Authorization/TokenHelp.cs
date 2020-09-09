@@ -20,6 +20,7 @@ namespace Authorization
         public static string WriteVisitToken(string to = "everyOne")
         {
             var visit = new VisitToken() { ETime=TimeSpan.FromHours(12), From= _from, STime=DateTime.Now, To= to, ZZ= _zz };
+            Current.VisitToKey = to;
             return MySecurity.SEncryptString(visit.ToJsonString(), Config.VisitTokenSY);
             //return SecurityHelp.Init.Encrypto(visit.ToJsonString());
         }
@@ -61,7 +62,7 @@ namespace Authorization
                 errorMessage = "Token解析失败。";
                 return false;
             }
-            if (visitToken.From!=_from || visitToken.ZZ!=_zz)
+            if (visitToken.From!=_from || visitToken.ZZ!=_zz || Config.VisitTos.Count <= 0 || !Config.VisitTos.ContainsKey(visitToken.To))
             {
                 errorMessage = "非法访问。"; 
                 return false;
@@ -77,6 +78,7 @@ namespace Authorization
                     return false;
                 }
             }
+            Current.VisitToKey = visitToken.To;
             errorMessage = string.Empty;
             return true;
         }

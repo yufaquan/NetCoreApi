@@ -11,6 +11,12 @@
 
         public static string UserJson { get; set; }
 
+        public static string VisitToKey { get; set; }
+        /// <summary>
+        /// 微信
+        /// </summary>
+        public static string WxOpenId { get; set; }
+        public static string WxUnionId { get; set; }
 
         /// <summary>
         /// 清空数据
@@ -20,8 +26,9 @@
             UserToken = null;
             UserId = null;
             UserJson = null;
-            //userToken = null;
-            //user = null;
+            VisitToKey = null;
+            WxOpenId = null;
+            WxUnionId = null;
         }
 
     }

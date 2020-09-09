@@ -105,13 +105,22 @@
             登录
             </summary>
         </member>
-        <member name="M:NetCoreAPI.Controllers.Management.LoginController.LoginByPwd(System.String,System.String)">
+        <member name="M:NetCoreAPI.Controllers.Management.LoginController.LoginByPwd(NetCoreAPI.Controllers.Management.LoginInfo)">
             <summary>
             帐号密码登录
             </summary>
-            <param name="name">帐号</param>
-            <param name="pwd">密码(MD5加密一次后传入)</param>
+            <param name="info">登录参数</param>
             <returns></returns>
+        </member>
+        <member name="P:NetCoreAPI.Controllers.Management.LoginInfo.Name">
+            <summary>
+            用户名/电话/邮箱
+            </summary>
+        </member>
+        <member name="P:NetCoreAPI.Controllers.Management.LoginInfo.Pwd">
+            <summary>
+            密码(MD5加密一次后传入)
+            </summary>
         </member>
         <member name="T:NetCoreAPI.Controllers.Management.MenuController">
             <summary>
@@ -147,8 +156,14 @@
             获取用户列表
             </summary>
             <param name="name">筛选条件And拼接</param>
-            <param name="pageIndex">页数</param>
-            <param name="pageSize">每页多少条</param>
+            <param name="page">页数</param>
+            <param name="limit">每页多少条</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.UserController.Info">
+            <summary>
+            获取用户信息
+            </summary>
             <returns></returns>
         </member>
         <member name="M:NetCoreAPI.Controllers.Management.UserController.Add(Entity.User)">
@@ -158,11 +173,12 @@
             <param name="user">用户</param>
             <returns></returns>
         </member>
-        <member name="M:NetCoreAPI.Controllers.Portal.GetVisitTokenController.Get">
+        <member name="M:NetCoreAPI.Controllers.Portal.GetVisitTokenController.Get(System.String)">
             <summary>
             获取访问token
             JWT授权(数据将在请求头中进行传输) 参数结构: "Authorization: Bearer {token}"
             </summary>
+            <param name="key">唯一标识</param>
             <returns></returns>
         </member>
         <member name="T:NetCoreAPI.Controllers.WeChat.CardController">
@@ -182,6 +198,18 @@
             </summary>
             <param name="info">卡券信息(yitianwan)</param>
             <returns></returns>
+        </member>
+        <member name="T:NetCoreAPI.Controllers.WeChat.OAuth2Controller">
+            <summary>
+            微信网页授权
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.WeChat.OAuth2Controller.GetWeChatUserInfo(System.String)">
+            <summary>
+            OAuthScope.snsapi_userinfo获取用户信息
+            </summary>
+            <param name="code"></param>
+            <returns>HttpResult</returns>
         </member>
         <member name="T:NetCoreAPI.Controllers.WeChat.WeChatController">
             <summary>
@@ -222,6 +250,26 @@
             <summary>
             直接通过appid获取菜单
             </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Common.Appsettings">
+            <summary>
+            appsettings.json操作类
+            </summary>
+        </member>
+        <member name="M:Common.Appsettings.app(System.String[])">
+            <summary>
+            封装要操作的字符
+            </summary>
+            <param name="sections">节点配置</param>
+            <returns></returns>
+        </member>
+        <member name="M:Common.Appsettings.app``1(System.String[])">
+            <summary>
+            递归获取配置信息数组
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="sections"></param>
             <returns></returns>
         </member>
     </members>

@@ -81,18 +81,12 @@ namespace SqlSugar
         /// <param name="orderByExpression">排序字段 it=>it.id或者it=>new{it.id,it.name}</param>
         /// <param name="orderByType">排序分类 默认OrderByType.Asc</param>
         /// <returns></returns>
-        public virtual List<T> GetPageList(Expression<Func<T, bool>> whereExpression, PageModel pageModel, ref int pageCount, Expression<Func<T, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
+        public virtual List<T> GetPageList(Expression<Func<T, bool>> whereExpression, PageModel pageModel, ref int total, Expression<Func<T, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
         {
-            var totalCount = 0;
             var list= Db.Queryable<T>()
                 .Where(whereExpression.ExpressionAnd(x => x.IsDeleted == false))
-                .OrderBy(orderByExpression, orderByType).ToPageList(pageModel.PageIndex, pageModel.PageSize, ref totalCount);
+                .OrderBy(orderByExpression, orderByType).ToPageList(pageModel.PageIndex, pageModel.PageSize, ref total);
 
-            pageCount = totalCount / pageModel.PageSize;
-            if (totalCount % pageModel.PageSize > 0)
-            {
-                pageCount++;
-            }
             return list;
         }
 

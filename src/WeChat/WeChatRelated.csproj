@@ -10,10 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MP\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\Bussiness\Bussiness.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 

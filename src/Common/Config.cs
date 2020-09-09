@@ -9,7 +9,7 @@ namespace Common
     /// </summary>
     public static class Config
     {
-        private static string isOpenRedis="true";
+        private static string isOpenRedis = "true";
         private static string redisConnectionString = "127.0.0.1:6379,password=123456";
         private static string mysqlConnectionStrng = "Data Source=yufaquan.cn;Port=3306;Database=netcoreapi;Uid=yufaquan;Pwd=passWord@Yfq;Allow Zero Datetime=false;charset=utf8;pooling=true;";
         private static JWTInfo jwtInfo = new JWTInfo() { Issuer = "YFQ", SigningKey = "YFQAPI's Secret Key" };
@@ -33,7 +33,7 @@ namespace Common
         /// <summary>
         /// 访问Token的mc
         /// </summary>
-        public static string TokenName { get => "yvanToken";  }
+        public static string TokenName { get => "yvanToken"; }
         /// <summary>
         /// 访问Token的秘钥
         /// </summary>
@@ -50,6 +50,11 @@ namespace Common
         /// 加密解密的默认密钥
         /// </summary>
         public static string SecuritySign { get => "Yvan_YuFaquan_1998_ACE"; }
+
+        /// <summary>
+        /// 可访问访问密钥
+        /// </summary>
+        public static Dictionary<string,string> VisitTos { get; set; }
     }
 
     public class JWTInfo

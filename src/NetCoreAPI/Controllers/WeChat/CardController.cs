@@ -13,7 +13,7 @@ namespace NetCoreAPI.Controllers.WeChat
     /// <summary>
     /// 卡券
     /// </summary>
-    [Route("[controller]/[action]")]
+    [Route("wx/[controller]/[action]")]
     [ApiController]
     public class CardController : ControllerBase
     {

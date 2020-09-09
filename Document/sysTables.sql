@@ -37,7 +37,14 @@ CREATE TABLE `sys_menu` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `PId` int(11) default 0 NULL comment '上级菜单Id 一级菜单默人为0',
   `Name` varchar(255) NOT NULL comment '菜单名称',
-  `Url` varchar(255) NULL comment '菜单路径 一级菜单不填',
+  `Component` varchar(255) NULL comment '菜单路径 一级菜单不填',
+  `Alias` varchar(128) NULL comment '别名',
+  `Redirect` varchar(255) NULL comment '重定向',
+  `Path` varchar(255) NOT NULL comment '虚拟路径',
+  `Title` varchar(128) NULL comment '标题',
+	`Sort` int null comment '排序',
+  `Icon` varchar(128) NOT NULL comment 'Icon',
+  `AlwaysShow` tinyint NULL default 0 comment '是否一直显示',
   `Permissions` varchar(5000) DEFAULT NULL comment '读取菜单所需权限',
   `Description` varchar(500) DEFAULT NULL comment '菜单描述',
   `Hide` tinyint not null default 0 comment '是否隐藏 默认不隐藏 0',
@@ -77,17 +84,18 @@ CREATE TABLE `sys_role` (
 
 drop table if exists `sys_userInfo`;
 create table `sys_userInfo`(
-	`id` int not null auto_increment,
-	`userId` varchar(32) not null comment '用户唯一标识',
-	`openId` varchar(32) null comment '公众号唯一标识',
-	`projectId` varchar(32) null comment '项目唯一标识',
-	`createdBy` int null ,
-	`createdTime` datetime null,
-	`modifiedBy` int null ,
-	`modifiedTime` datetime null,
-	`deletedBy` int null ,
-	`deletedTime` datetime DEFAULT NULL,
-	`isDeleted` tinyint not null default 0,
+	`Id` int not null auto_increment,
+	`UserId` varchar(32) not null comment '用户唯一标识',
+	`OpenId` varchar(32) null comment '唯一标识',
+	`ProjectId` varchar(32) null comment '项目唯一标识',
+	`ProjectType` varchar(32) not null comment '项目类型',
+	`CreatedBy` int null ,
+	`CreatedTime` datetime null,
+	`ModifiedBy` int null ,
+	`ModifiedTime` datetime null,
+	`DeletedBy` int null ,
+	`DeletedTime` datetime DEFAULT NULL,
+	`IsDeleted` tinyint not null default 0,
 	primary key (`id`)
 ) comment='用户详情信息';
 
@@ -115,6 +123,7 @@ create table `sys_log_api`(
 	`userId` int null comment '',
 	`startTime` datetime null comment '响应开始时间',
 	`EndTime` datetime null comment '响应结束时间',
+	`From` varchar(225) not null comment '来自哪儿',
 	`Url` varchar(225) not null comment '请求路径',
 	`HttpMethod` varchar(225) not null comment '请求类型',
 	`LogLevel` varchar(24) not null comment '日志等级',
@@ -140,7 +149,7 @@ CREATE TABLE `sys_log_event` (
   `UserName` varchar(255) NOT NULL COMMENT '用户名称',
   `EventType` varchar(50) NOT NULL COMMENT '事件类型',
   `Content` varchar(500) NOT NULL COMMENT '事件详情',
-  `Remark` varchar(500) NOT NULL COMMENT '事件备注',
+  `Remark` varchar(1000) NOT NULL COMMENT '事件备注',
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COMMENT='事件日志';
 

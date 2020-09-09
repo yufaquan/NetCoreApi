@@ -89,13 +89,13 @@ namespace IService
         /// 获取分页list
         /// </summary>
         /// <param name="whereExpression">筛选条件</param>
-        /// <param name="pageIndex">第几页</param>
-        /// <param name="pageSize">每页条数</param>
-        /// <param name="pageCount">筛选后总数据条数</param>
+        /// <param name="page">第几页</param>
+        /// <param name="limit">每页条数</param>
+        /// <param name="total">筛选后总数据条数</param>
         /// <param name="orderByExpression">排序字段</param>
         /// <param name="orderByType">排序方式;Default:OrderByType.Asc</param>
         /// <returns></returns>
-        IList<T> GetPageList(Expression<Func<T, bool>> whereExpression, int pageIndex, int pageSize, ref int pageCount, Expression<Func<T, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc);
+        IList<T> GetPageList(Expression<Func<T, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<T, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc);
 
         /// <summary>
         /// 事务开始

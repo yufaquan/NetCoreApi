@@ -25,31 +25,61 @@ namespace NetCoreAPI.Controllers.Management
         /// 获取用户列表
         /// </summary>
         /// <param name="name">筛选条件And拼接</param>
-        /// <param name="pageIndex">页数</param>
-        /// <param name="pageSize">每页多少条</param>
+        /// <param name="page">页数</param>
+        /// <param name="limit">每页多少条</param>
         /// <returns></returns>
         [MyAuthorize(typeof(Read<User>))]
         [HttpGet]
-        public JsonResult GetList(string name,int pageIndex,int pageSize)
+        public JsonResult GetList(string name,int page,int limit)
         {
             var pageCount = 0;
             var user = new User();
             user.Name = name;
-            var list = UserBussiness.Init.GetPageList(user, pageIndex, pageSize, ref pageCount);
+            var list = UserBussiness.Init.GetPageList(user, page, limit, ref pageCount);
             string errorMessage;
             var result = new {
                 pageCount,
-                pageIndex,
-                pageSize,
+                page,
+                limit,
                 list = from a in list select new
                 {
-                    a.Name, a.Id, a.Area, a.Email, a.HeadImgUrl, a.Mobile, a.NickName, Sex=a.Sex.GetDisplayName(),
+                    a.Name, a.Id, a.Area, a.Email, a.HeadImgUrl, a.Mobile, a.NickName,
+                    a.Sex,
                     CreatedAt = a.CreatedAt.ToLongString(),
                     CreatedBy = a.CreatedBy.HasValue ? ServiceHelp.GetUserService.GetById(a.CreatedBy.Value)?.Name : "",
-                    RoleIds = (from role in RoleBussiness.Init.GetRoleByUserId(a.Id, out errorMessage) select new { role.Id, role.Name })
+                    Roles = (from role in RoleBussiness.Init.GetRoleByUserId(a.Id, out errorMessage) select new { role.Id, role.Name })
                 }
             };
             return new JsonResult(HttpResult.Success(result));
+        }
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [MyAuthorize(typeof(Read<User>))]
+        public JsonResult Info()
+        {
+            if (Current.UserId.HasValue)
+            {
+                string errorMessage;
+                var user = ServiceHelp.GetUserService.GetById(Current.UserId.Value);
+                var result = new {
+                    user.Area,user.CityId,user.CountryId,user.DistrictId,user.Email,user.HeadImgUrl,user.Id,user.Mobile,user.Name,user.NickName,user.ProvinceId,user.Signature,
+                    Sex=user.Sex.GetDisplayName(),
+                    Permissions =user.Permissions.ToList(','),
+                    Roles= (from role in RoleBussiness.Init.GetRoleByUserId(user.Id, out errorMessage) select new { role.Id, role.Name }),
+                    CreatedBy = user.CreatedBy.HasValue ? ServiceHelp.GetUserService.GetById(user.CreatedBy.Value)?.Name : "",
+                    CreatedAt =user.CreatedAt.ToLongString()
+                };
+                return new JsonResult(HttpResult.Success(result));
+            }
+            else
+            {
+                return new JsonResult(HttpResult.Success(HttpResultCode.SelectFail,"未获取到用户信息。",null));
+            }
+            
         }
 
         /// <summary>

@@ -17,15 +17,14 @@ namespace NetCoreAPI.Controllers.Management
         /// <summary>
         /// 帐号密码登录
         /// </summary>
-        /// <param name="name">帐号</param>
-        /// <param name="pwd">密码(MD5加密一次后传入)</param>
+        /// <param name="info">登录参数</param>
         /// <returns></returns>
         [HttpPost]
         [NotCheckLogin]
-        public JsonResult LoginByPwd(string name,string pwd)
+        public JsonResult LoginByPwd([FromBody] LoginInfo info)
         {
             string errorMessage;
-            var token = UserBussiness.Init.LoginByPwd(name, pwd, out errorMessage);
+            var token = UserBussiness.Init.LoginByPwd(info.Name, info.Pwd.ToUpper(), out errorMessage);
             if (!string.IsNullOrWhiteSpace(token) && string.IsNullOrWhiteSpace(errorMessage))
             {
                 return new JsonResult(HttpResult.Success(new { token }));
@@ -35,5 +34,16 @@ namespace NetCoreAPI.Controllers.Management
                 return new JsonResult(HttpResult.Success(HttpResultCode.LoginFail, errorMessage, null));
             }
         }
+    }
+    public class LoginInfo
+    {
+        /// <summary>
+        /// 用户名/电话/邮箱
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// 密码(MD5加密一次后传入)
+        /// </summary>
+        public string Pwd { get; set; }
     }
 }

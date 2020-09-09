@@ -9,20 +9,19 @@ using System.Text;
 
 namespace Service
 {
-    public class UserService :  IUserService
+    public class UserInfoService :  IUserInfoService
     {
-        private DbContext<User> db;
-        public UserService()
+        private DbContext<UserInfo> db;
+        public UserInfoService()
         {
-            db = new DbContext<User>();
+            db = new DbContext<UserInfo>();
         }
-        public User Add(User t)
+        public UserInfo Add(UserInfo t)
         {
-            var r= db.InsertT(t);
-            return r;
+            return db.InsertT(t);
         }
 
-        public bool Add(List<User> list)
+        public bool Add(List<UserInfo> list)
         {
             if (list!=null)
             {
@@ -46,12 +45,12 @@ namespace Service
             db.CommitTran();
         }
 
-        public bool Delete(User t)
+        public bool Delete(UserInfo t)
         {
             return db.Delete(t.Id);
         }
 
-        public bool Delete(List<User> list)
+        public bool Delete(List<UserInfo> list)
         {
             return db.Delete(list);
         }
@@ -66,17 +65,17 @@ namespace Service
             return db.Delete(id);
         }
 
-        public User Edit(User t)
+        public UserInfo Edit(UserInfo t)
         {
             return db.UpdateT(t);
         }
 
-        public bool Edit(List<User> list)
+        public bool Edit(List<UserInfo> list)
         {
             return db.Update(list);
         }
 
-        public IList<User> GetAllList(Expression<Func<User, bool>> whereExpression)
+        public IList<UserInfo> GetAllList(Expression<Func<UserInfo, bool>> whereExpression)
         {
             if (whereExpression==null)
             {
@@ -85,17 +84,17 @@ namespace Service
             return db.GetList(whereExpression);
         }
 
-        public User GetBy(Expression<Func<User, bool>> whereExpression)
+        public UserInfo GetBy(Expression<Func<UserInfo, bool>> whereExpression)
         {
             return db.GetSingle(whereExpression);
         }
 
-        public User GetById(int id)
+        public UserInfo GetById(int id)
         {
             return db.GetById(id);
         }
 
-        public IList<User> GetPageList(Expression<Func<User, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<User, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
+        public IList<UserInfo> GetPageList(Expression<Func<UserInfo, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<UserInfo, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
         {
             return db.GetPageList(whereExpression, new PageModel() { PageIndex = page, PageSize = limit }, ref total, orderByExpression, orderByType);
         }

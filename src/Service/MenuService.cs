@@ -94,9 +94,9 @@ namespace Service
             return db.GetById(id);
         }
 
-        public IList<Menus> GetPageList(Expression<Func<Menus, bool>> whereExpression, int pageIndex, int pageSize, ref int pageCount, Expression<Func<Menus, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
+        public IList<Menus> GetPageList(Expression<Func<Menus, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<Menus, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
         {
-            return db.GetPageList(whereExpression, new PageModel() { PageIndex = pageIndex, PageSize = pageSize }, ref pageCount, orderByExpression, orderByType);
+            return db.GetPageList(whereExpression, new PageModel() { PageIndex = page, PageSize = limit }, ref total, orderByExpression, orderByType);
         }
 
         public void RollbackTran()

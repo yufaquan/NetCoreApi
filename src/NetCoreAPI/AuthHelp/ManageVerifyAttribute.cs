@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
@@ -134,33 +135,41 @@ namespace NetCoreAPI.AuthHelp
             log.ExceptionInfo = context.Exception?.Message;
             log.HttpMethod= request.Method;
             log.LogLevel = context.Exception!=null? Enums.LogLevel.Error: Enums.LogLevel.Info;
+            string from = "";
+            Config.VisitTos.TryGetValue(Current.VisitToKey,out from);
+            log.From = from;
             StringBuilder rp = new StringBuilder();
             #region 获取请求参数
-            if (request.Method.AsStrs(new string[] {"put","post" }))
+            if (request.Method.ToLower().AsStrs(new string[] {"put","post" }))
             {
                 try
                 {
-                    if (request.Form != null && request.Form.Count > 0)
+                    request.Body.Seek(0, SeekOrigin.Begin);
+                    using (var reader = new StreamReader(request.Body, Encoding.UTF8))
                     {
-                        rp.Append("{");
-                        foreach (var item in request.Form.Keys)
-                        {
-                            rp.Append($"\"{item}\":\"{request.Form[item]}\",");
-                        }
-                        rp.Append("}");
+                        var param = reader.ReadToEnd();
+                        rp.Append(param);
                     }
+                    request.Body.Seek(0, SeekOrigin.Begin);
                 }
-                catch (Exception)
+                catch (Exception){}
+                if (request.Query != null && request.Query.Count > 0)
                 {
-                    if (request.Query != null && request.Query.Count > 0)
+                    bool isHave = false;//是否已有数据
+                    if (rp.Length>0)
                     {
-                        rp.Append("{");
-                        foreach (var item in request.Query.Keys)
-                        {
-                            rp.Append($"\"{item}\":\"{request.Query[item]}\",");
-                        }
-                        rp.Append("}");
+                        isHave = true;
+                        rp.Insert(0,"{\"Body\":");
+                        rp.Append("},\"Query\":");
                     }
+                    rp.Append("{");
+                    foreach (var item in request.Query.Keys)
+                    {
+                        rp.Append($"\"{item}\":\"{request.Query[item]}\",");
+                    }
+                    rp.Append("}");
+                    if (isHave)
+                        rp.Append("}");
                 }
             }
             else if (request.Query != null && request.Query.Count > 0)

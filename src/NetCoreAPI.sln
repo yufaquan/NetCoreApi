@@ -24,7 +24,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlSugar", "SqlSugar\MySq
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IService", "IService\IService.csproj", "{3DEE051A-D0E2-48E6-B3FF-5FAA342687CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeChat", "WeChat\WeChat.csproj", "{A1DCAEEE-B2D8-4190-9060-69F8BBF38161}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeChatRelated", "WeChat\WeChatRelated.csproj", "{A1DCAEEE-B2D8-4190-9060-69F8BBF38161}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

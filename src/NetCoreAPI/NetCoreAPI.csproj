@@ -30,7 +30,7 @@
     <ProjectReference Include="..\Bussiness\Bussiness.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Entity\Entity.csproj" />
-    <ProjectReference Include="..\WeChat\WeChat.csproj" />
+    <ProjectReference Include="..\WeChat\WeChatRelated.csproj" />
   </ItemGroup>
 
 

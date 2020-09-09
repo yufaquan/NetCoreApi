@@ -17,25 +17,34 @@ namespace Entity
     public class Menus:BaseModel
     {
         public Menus() { }
-        public Menus(string name,string url)
-        {
-            Name = name;
-            Url = url;
-            Hide = false;
-        }
         /// <summary>
         /// 父菜单Id
         /// </summary>
         public int PId { get; set; }
         /// <summary>
-        /// 菜单标题
+        /// 菜单名称
         /// </summary>
         public string Name { get; set; }
-        
+
         /// <summary>
-        /// 菜单路径 
+        /// 别名
         /// </summary>
-        public string Url { get; set; }
+        public string Alias { get; set; }
+
+        /// <summary>
+        /// 重定向
+        /// </summary>
+        public string Redirect { get=>Children!=null&&Children.Count>0?Children.FirstOrDefault().Path: Redirect; set=>Redirect=value; }
+
+        /// <summary>
+        /// 虚拟路径
+        /// </summary>
+        public string Path { get; set; }
+
+        /// <summary>
+        /// 菜单真实路径 
+        /// </summary>
+        public string Component { get=>string.IsNullOrWhiteSpace(Component)? "Layout" : Component; set=>Component=value; }
         /// <summary>
         /// 是否隐藏
         /// </summary>
@@ -46,15 +55,42 @@ namespace Entity
         public string Permissions { get; set; }
 
         /// <summary>
+        /// 排序
+        /// </summary>
+        public int Sort { get; set; }
+
+        /// <summary>
         /// 子菜单
         /// </summary>
         [SugarColumn(IsIgnore = true)]
-        public List<Menus> SubMenu { get; set; }
+        public List<Menus> Children { get; set; }
         /// <summary>
         /// 菜单描述
         /// </summary>
         public string Description { get; set; }
 
+        /// <summary>
+        /// 是否一直显示
+        /// </summary>
+        public bool AlwaysShow { get; set; }
+
+        /// <summary>
+        /// 标题
+        /// </summary>
+        public string Title { get; set; }
+        /// <summary>
+        /// 图标
+        /// </summary>
+        public string Icon { get; set; }
+
+        [SugarColumn(IsIgnore = true)]
+        public Meta Meta { get => new Meta() {Title=Title, Icon=Icon }; }
+    }
+
+    public class Meta
+    {
+        public string Title { get; set; }
+        public string Icon { get; set; }
     }
 
 }

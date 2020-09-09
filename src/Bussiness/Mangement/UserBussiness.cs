@@ -1,15 +1,22 @@
 ﻿using Authorization;
 using Common;
 using Entity;
+using IService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Bussiness.Mangement
 {
     public class UserBussiness
     {
+        private IUserService _service;
+        public UserBussiness()
+        {
+            _service = ServiceHelp.GetUserService;
+        }
         public static UserBussiness Init { get => new UserBussiness(); }
 
         /// <summary>
@@ -50,13 +57,7 @@ namespace Bussiness.Mangement
                     Current.UserToken = usertoken;
                     Current.UserJson = user.ToJsonString();
                     //记录登录日志
-                    LogEvent log = new LogEvent();
-                    log.EventType = Enums.EventType.Login;
-                    log.Content = $"用户{user.Name}[{user.NickName}]登录了系统。";
-                    log.UserId = user.Id;
-                    log.UserName = user.Name;
-                    log.WriteDate = DateTime.Now;
-                    var task= ServiceHelp.GetLogService.WriteEventLogAsync(log);
+                    var task= ServiceHelp.GetLogService.WriteEventLogToLoginAsync();
                     return usertoken;
                 }
             }
@@ -142,11 +143,11 @@ namespace Bussiness.Mangement
         /// 获取分页数据
         /// </summary>
         /// <param name="user"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="pageCount"></param>
+        /// <param name="page"></param>
+        /// <param name="limit"></param>
+        /// <param name="total"></param>
         /// <returns></returns>
-        public List<User> GetPageList(User user, int pageIndex, int pageSize, ref int pageCount)
+        public List<User> GetPageList(User user, int page, int limit, ref int total)
         {
             System.Linq.Expressions.Expression<Func<User, bool>> where = null;
             if (!string.IsNullOrWhiteSpace(user.Name))
@@ -166,7 +167,7 @@ namespace Bussiness.Mangement
                 where = where.ExpressionAnd(x => x.Mobile.Contains(user.Mobile));
             }
 
-            return ServiceHelp.GetUserService.GetPageList(where, pageIndex, pageSize, ref pageCount, x => x.CreatedAt, SqlSugar.OrderByType.Desc).ToList();
+            return ServiceHelp.GetUserService.GetPageList(where, page, limit, ref total, x => x.CreatedAt, SqlSugar.OrderByType.Desc).ToList();
         }
 
         /// <summary>
@@ -182,7 +183,57 @@ namespace Bussiness.Mangement
             {
                 return null;
             }
-            return ServiceHelp.GetUserService.Add(user);
+            //二次加密
+            user.PassWordMD5 = Commons.GetMD5_32(user.PassWordMD5);
+            var r = ServiceHelp.GetUserService.Add(user);
+            if (r!=null)
+            {
+                Task task = ServiceHelp.GetLogService.WriteEventLogCreateAsync(typeof(User), r.Id, r.ToJsonString());
+            }
+            return r;
+        }
+
+
+        public User Edit(User user, out string errorMessage)
+        {
+            if (!VerifyData(user, out errorMessage))
+            {
+                return null;
+            }
+            if (_service.GetById(user.Id) == null)
+            {
+                errorMessage = "未查询到数据！";
+                return null;
+            }
+            //二次加密
+            user.PassWordMD5 = Commons.GetMD5_32(user.PassWordMD5);
+            var rUser = _service.Edit(user);
+            if (rUser == null)
+            {
+                errorMessage = "修改失败。";
+                return null;
+            }
+            //记录操作日志
+            Task task = ServiceHelp.GetLogService.WriteEventLogEditAsync(typeof(User), rUser.Id, rUser.ToJsonString());
+            return rUser;
+        }
+
+        /// <summary>
+        /// 逻辑删除
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="errorMessage"></param>
+        /// <returns>True：成功；</returns>
+        public bool Delete(int Id, out string errorMessage)
+        {
+            errorMessage = string.Empty;
+            var rb = _service.DeleteById(Id);
+            if (rb)
+            {
+                //删除成功，记录日志
+                Task task = ServiceHelp.GetLogService.WriteEventLogDeleteAsync(typeof(User), Id);
+            }
+            return rb;
         }
 
         /// <summary>
@@ -197,6 +248,11 @@ namespace Bussiness.Mangement
             if (user == null)
             {
                 errorMessage = "未接收到数据。";
+                return false;
+            }
+            if (user.Id==1)
+            {
+                errorMessage = "系统设置，无法修改！";
                 return false;
             }
             if (string.IsNullOrWhiteSpace(user.Name))

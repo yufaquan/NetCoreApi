@@ -94,15 +94,40 @@ namespace Entity
             /// <summary>
             /// 一般信息
             /// </summary>
+            [Display(Name = "一般信息")]
             Info,
             /// <summary>
             /// 错误日志
             /// </summary>
+            [Display(Name = "错误日志")]
             Error,
             /// <summary>
             /// 警告日志
             /// </summary>
+            [Display(Name = "警告日志")]
             Warning
+        }
+
+        /// <summary>
+        /// 项目类型
+        /// </summary>
+        public enum ProjectType
+        {
+            /// <summary>
+            /// 微信公众号
+            /// </summary>
+            [Display(Name = "微信公众号")]
+            WeChatMP,
+            /// <summary>
+            /// 微信小程序
+            /// </summary>
+            [Display(Name = "微信小程序")]
+            WeChatApplet,
+            /// <summary>
+            /// 管理后台
+            /// </summary>
+            [Display(Name = "管理后台")]
+            ManagementAdmin
         }
 
     }

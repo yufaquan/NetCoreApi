@@ -24,6 +24,10 @@ namespace Entity
         /// </summary>
         public DateTime EndTime { get; set; }
         /// <summary>
+        /// 来自哪儿
+        /// </summary>
+        public string From { get; set; }
+        /// <summary>
         /// 请求路径
         /// </summary>
         public string Url { get; set; }

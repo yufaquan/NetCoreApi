@@ -55,5 +55,52 @@ namespace Common
             return str.Split(new char[] { s }, StringSplitOptions.RemoveEmptyEntries);
         }
 
+        #region 生成数字和字母的随机字符串
+        /// <summary>
+        /// 数字和字母随机数
+        /// </summary>
+        /// <param name="length">生成长度 不包含开头和结尾字符</param>
+        /// <param name="startStr">生成长度</param>
+        /// <param name="endStr">生成长度</param>
+        /// <returns>返回指定长度的数字和字母的随机串</returns>
+        public static string RndCode(int length,string startStr,string endStr)
+        {
+            char[] arrChar = new char[]{
+               'a','b','d','c','e','f','g','h','i','j','k','l','m','n','p','r','q','s','t','u','v','w','z','y','x',
+               '0','1','2','3','4','5','6','7','8','9',
+               'A','B','C','D','E','F','G','H','I','J','K','L','M','N','Q','P','R','T','S','V','U','W','X','Y','Z'};
+            StringBuilder num = new System.Text.StringBuilder();
+            if (!string.IsNullOrWhiteSpace(startStr))
+            {
+                num.Append(startStr);
+            }
+            Random rnd = new Random((int)DateTime.Now.Ticks);
+            for (int i = 0; i < length; i++)
+            {
+                num.Append(arrChar[rnd.Next(0, arrChar.Length)].ToString());
+            }
+            if (!string.IsNullOrWhiteSpace(endStr))
+            {
+                num.Append(endStr);
+            }
+            return num.ToString();
+        }
+        /// <summary>
+        /// 数字和字母随机数
+        /// </summary>
+        /// <param name="count">集合大小</param>
+        /// <param name="len">生成长度 不包含开头和结尾字符</param>
+        /// <param name="startStr">生成长度</param>
+        /// <param name="endStr">生成长度</param>
+        /// <returns>返回指定长度的数字和字母的随机串集合</returns>
+        public static IList<string> RndCodeList(int count,int len, string startStr, string endStr)
+        {
+            IList<string> list = new List<string>();
+            for (int i = 0; i < count; i++) list.Add(RndCode(len,startStr,endStr));
+            return list;
+        }
+        #endregion
+
+
     }
 }

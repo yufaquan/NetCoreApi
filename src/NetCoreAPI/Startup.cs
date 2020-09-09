@@ -46,12 +46,34 @@ namespace NetCoreAPI
         {
             services.AddControllers();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("all", builder =>
+                {
+                    builder.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(new[] { 
+                        "http://localhost:9529"
+                    });
+                });
+            });
+
             //过滤器
             services.AddMvc(options =>
             {
                 options.Filters.Add<ExceptionActionFilter>();
                 options.Filters.Add<ManageVerifyAttribute>();
             });
+
+            #region Config
+            //注册appsettings读取类
+            services.AddSingleton(new Appsettings(Configuration));
+            //读取相关配置
+            var vtos = Appsettings.app<Dictionary<string, string>>(new string[] { "VisitToken", "Tos" });
+            Common.Config.VisitTos = vtos.FirstOrDefault();
+            Common.Config.IsOpenRedis= Appsettings.app(new string[] { "Config", "IsOpenRedis" });
+            Common.Config.MysqlConnectionStrng = Appsettings.app(new string[] { "Config", "MysqlConnectionStrng" });
+            Common.Config.RedisConnectionString = Appsettings.app(new string[] { "Config", "RedisConnectionString" });
+            #endregion
+
 
             #region Swagger
             services.AddSwaggerGen(c =>
@@ -237,8 +259,6 @@ namespace NetCoreAPI
             //认证服务
             //services.AddSingleton<IAuthorizationHandler, PolicyHandler>();
 
-            //services.AddCors();
-
             //主要用于获取客户端ip
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -261,11 +281,19 @@ namespace NetCoreAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.Use(next => context =>
+            {
+                context.Request.EnableBuffering();
+                return next(context);
+            });
             //app.UseMiddleware<TokenAuth>();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            //跨域
+            app.UseCors("all");
 
             app.UseAuthorization();
 
@@ -278,14 +306,6 @@ namespace NetCoreAPI
                     return Task.CompletedTask;
                 });
             });
-
-            ////跨域
-            //app.UseCors(builder => builder
-            //  .AllowAnyOrigin()
-            //  .AllowAnyMethod()
-            //  .AllowAnyHeader()
-            //  .AllowCredentials()
-            //  );
 
             #region 微信模块
             // 启动 CO2NET 全局注册，必须！
