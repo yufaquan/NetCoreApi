@@ -1,4 +1,5 @@
 ﻿using Common;
+using Microsoft.AspNetCore.Http;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,35 @@ namespace Entity
         public LogError()
         {
         }
+        public LogError(Exception ex, HttpContext httpContext)
+        {
+            MsgType = ex.GetType().Name;
+            Message = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+            StackTrace = ex.StackTrace.Length > 300 ? ex.StackTrace.Substring(0, 300) : ex.StackTrace;
+            Source = ex.Source;
+            LogLevel = Enums.LogLevel.Error;
+            Time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            Assembly = ex.TargetSite.Module.Assembly.FullName;
+            Method = ex.TargetSite.Name;
 
+            if (httpContext!=null)
+            {
+                try
+                {
+                    HttpRequest request = httpContext.Request;
+                    //HttpContextAccessor icontext = new HttpContextAccessor();
+                    IP = httpContext?.Connection.RemoteIpAddress.ToString();
+                    UserAgent = request.Headers["User-Agent"];
+                    Path = request.Path;
+                    HttpMethod = request.Method;
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            UserName = Current.UserJson.JsonToModelOrDefault<User>().Name;
+        }
         public int Id { get; set; }
         /// <summary>
         /// 

@@ -31,5 +31,9 @@
             WxUnionId = null;
         }
 
+        /// <summary>
+        /// 项目根目录
+        /// </summary>
+        public static string ServerPath { get; set; }
     }
 }

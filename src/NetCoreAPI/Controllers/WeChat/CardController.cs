@@ -13,9 +13,8 @@ namespace NetCoreAPI.Controllers.WeChat
     /// <summary>
     /// 卡券
     /// </summary>
-    [Route("wx/[controller]/[action]")]
     [ApiController]
-    public class CardController : ControllerBase
+    public class CardController : WeChatApiBase
     {
         public static readonly string AppId = Config.SenparcWeixinSetting.WeixinAppId;
 

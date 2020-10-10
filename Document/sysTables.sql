@@ -177,3 +177,44 @@ CREATE TABLE `sys_log_error` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='系统错误日志';
 
+
+
+
+drop table if exists `sys_attachment`;
+create table `sys_attachment`(
+	`Id` int not null auto_increment comment 'id',
+	`Name` varchar(125) not null comment '附件名称',
+	`Path` varchar(255) not null comment '相对地址',
+	`Size` int null comment '文件大小',
+	`Type` int null comment '文件类型',
+	`ContentType` varchar(125) null comment '文件类型',
+	`Extension` varchar(64) comment '后缀名',
+	`Base64` varchar(500) comment 'base64 url',
+	`enabled` tinyint not null default 0 comment '是否启用，0：启用；1禁用；',
+	`CreatedBy` int null ,
+	`CreatedTime` datetime null,
+	`ModifiedBy` int null ,
+	`ModifiedTime` datetime null,
+	`DeletedBy` int null ,
+	`DeletedTime` datetime DEFAULT NULL,
+	`IsDeleted` tinyint not null default 0,
+	primary key (`id`)
+) comment='附件';
+
+
+drop table if exists `sys_configuration`;
+create table `sys_configuration`(
+	`Id` int not null auto_increment comment 'id',
+	`key` varchar(125) not null comment 'key',
+	`value` varchar(1000) not null comment 'value',
+	`Description` varchar(255) null comment 'Description',
+	`CreatedBy` int null ,
+	`CreatedTime` datetime null,
+	`ModifiedBy` int null ,
+	`ModifiedTime` datetime null,
+	`DeletedBy` int null ,
+	`DeletedTime` datetime DEFAULT NULL,
+	`IsDeleted` tinyint not null default 0,
+	primary key (`id`)
+) comment='附件';
+

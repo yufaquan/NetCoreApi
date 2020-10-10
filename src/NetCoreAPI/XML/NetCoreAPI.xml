@@ -83,6 +83,41 @@
             注册权限
             </summary>
         </member>
+        <member name="T:NetCoreAPI.Controllers.Management.AttachmentController">
+            <summary>
+            附件
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.AttachmentController.GetList(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取列表
+            </summary>
+            <param name="name">筛选条件And拼接</param>
+            <param name="page">页数</param>
+            <param name="limit">每页多少条</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.AttachmentController.Add(System.Collections.Generic.IEnumerable{Microsoft.AspNetCore.Http.IFormFile})">
+            <summary>
+            创建附件
+            </summary>
+            <param name="file">文件</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.AttachmentController.DownLoadAttachment(System.Int32)">
+            <summary>
+            下载附件
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.AttachmentController.GetAttachment(System.Int32)">
+            <summary>
+            返回附件信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetCoreAPI.Controllers.Management.AuthorizationController">
             <summary>
             权限
@@ -97,6 +132,23 @@
         <member name="M:NetCoreAPI.Controllers.Management.AuthorizationController.GetAllAuthorizationStringList">
             <summary>
             获取所有权限值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetCoreAPI.Controllers.Management.ConfigurationController">
+            <summary>
+            系统配置
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.ConfigurationController.Get">
+            <summary>
+            获取
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.ConfigurationController.Set(Entity.Configuration)">
+            <summary>
+            保存
             </summary>
             <returns></returns>
         </member>
@@ -206,10 +258,64 @@
         </member>
         <member name="M:NetCoreAPI.Controllers.WeChat.OAuth2Controller.GetWeChatUserInfo(System.String)">
             <summary>
-            OAuthScope.snsapi_userinfo获取用户信息
+            获取微信用户信息
+            OAuthScope.snsapi_userinfo
+            授权回调填写前端地址，此处用code换取用户信息即可
             </summary>
             <param name="code"></param>
             <returns>HttpResult</returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.WeChat.OAuth2Controller.GetUserInfo(System.String)">
+            <summary>
+            获取系统用户信息
+            OAuthScope.snsapi_userinfo
+            会根据openid自动创建用户信息，如已存在则只会更新昵称、性别和头像
+            授权回调填写前端地址，此处用code换取用户信息即可
+            </summary>
+            <param name="code"></param>
+            <returns>HttpResult</returns>
+        </member>
+        <member name="T:NetCoreAPI.Controllers.WeChat.PayV3Controller">
+            <summary>
+            微信支付
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.WeChat.PayV3Controller.JsApi(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="productId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.WeChat.PayV3Controller.PayNotifyUrl">
+            <summary>
+            JS-SDK支付回调地址（在统一下单接口中设置notify_url）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.WeChat.PayV3Controller.OrderQuery">
+            <summary>
+            订单查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.WeChat.PayV3Controller.CloseOrder">
+            <summary>
+            关闭订单接口
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.WeChat.PayV3Controller.Refund">
+            <summary>
+            退款申请接口
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.WeChat.PayV3Controller.RefundNotifyUrl">
+            <summary>
+            退款通知地址
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:NetCoreAPI.Controllers.WeChat.WeChatController">
             <summary>

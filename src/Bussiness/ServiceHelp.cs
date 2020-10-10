@@ -34,5 +34,13 @@ namespace Bussiness
         /// 获取用户扩展信息服务
         /// </summary>
         public static IUserInfoService GetUserInfoService { get => new UserInfoService(); }
+        /// <summary>
+        /// 获取附件服务
+        /// </summary>
+        public static IAttachmentService GetAttachmentService { get => new AttachmentService(); }
+        /// <summary>
+        /// 获取系统配置服务
+        /// </summary>
+        public static ISysConfigurationService GetSysConfigurationService { get => new SysConfigurationService(); }
     }
 }

@@ -15,11 +15,6 @@ namespace Entity
     [KnownType(typeof(Role))]
     public partial class Role : BaseModel
     {
-        public Role()
-        {
-
-
-        }
 
 
         /// <summary>

@@ -38,6 +38,16 @@ namespace Authorization
     {
         public override string Text => "删除";
     }
+    [YDisplay("下载")]
+    public class DownLoad<T> : BaseAuthorize<T> where T : class
+    {
+        public override string Text => "下载";
+    }
+    [YDisplay("上传")]
+    public class UpLoad<T> : BaseAuthorize<T> where T : class
+    {
+        public override string Text => "上传";
+    }
     [YDisplay("权限管理")]
     public class Authorize<T> : BaseAuthorize<T> where T : class
     {

@@ -130,5 +130,36 @@ namespace Entity
             ManagementAdmin
         }
 
+        /// <summary>
+        /// 文件类型
+        /// </summary>
+        public enum FileType
+        {
+            /// <summary>
+            /// 未知
+            /// </summary>
+            [Display(Name = "未知")]
+            Null,
+            /// <summary>
+            /// 图片
+            /// </summary>
+            [Display(Name = "图片")]
+            Pictrue,
+            /// <summary>
+            /// 视频
+            /// </summary>
+            [Display(Name = "视频")]
+            Video,
+            /// <summary>
+            /// 音频
+            /// </summary>
+            [Display(Name = "音频")]
+            Voice,
+            /// <summary>
+            /// 文档
+            /// </summary>
+            [Display(Name = "文档")]
+            Document
+        }
     }
 }

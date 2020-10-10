@@ -52,7 +52,7 @@ namespace NetCoreAPI.AuthHelp
 
             string errorMessage = string.Empty;
 
-            //判断是否需要检查访问token
+            //判断是否需要检查访问token及其它校验
             if (IsHaveVisitToken(actionname, t))
             {
                 #region 访问token的校验
@@ -71,42 +71,42 @@ namespace NetCoreAPI.AuthHelp
                 }
                 #endregion
 
-            }
-
-            #region 用户token的校验
-            //存储当前访问的用户token
-            if (headers.ContainsKey("UserToken"))
-            {
-                Current.UserToken = headers["UserToken"];
-            }
-            else
-            {
-                Current.UserToken = string.Empty;
-            }
-
-            //判断是否需要检验登录
-            if (IsCheckLogin(t,actionname))
-            {
-                User user;
-                //判断是否登录
-                if (!IsLogin(out user,out errorMessage))
+                #region 用户token的校验
+                //存储当前访问的用户token
+                if (headers.ContainsKey("UserToken"))
                 {
-                    context.Result = new JsonResult(HttpResult.AginLogin(null, errorMessage));
+                    Current.UserToken = headers["UserToken"];
+                }
+                else
+                {
+                    Current.UserToken = string.Empty;
+                }
+
+                //判断是否需要检验登录
+                if (IsCheckLogin(t, actionname))
+                {
+                    User user;
+                    //判断是否登录
+                    if (!IsLogin(out user, out errorMessage))
+                    {
+                        context.Result = new JsonResult(HttpResult.AginLogin(null, errorMessage));
+                        return;
+                    }
+                }
+
+                //是否有权限
+                if (!IsHaveAuthorize(actionname, t, out errorMessage))
+                {
+                    context.Result = new JsonResult(HttpResult.NotAuth);
                     return;
                 }
+                if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    context.Result = new JsonResult(HttpResult.AginLogin(new { }, errorMessage));
+                }
+                #endregion
             }
 
-            //是否有权限
-            if (!IsHaveAuthorize(actionname, t, out errorMessage))
-            {
-                context.Result = new JsonResult(HttpResult.NotAuth);
-                return;
-            }
-            if (!string.IsNullOrWhiteSpace(errorMessage))
-            {
-                context.Result = new JsonResult(HttpResult.AginLogin(new { }, errorMessage));
-            }
-            #endregion
             //成功访问
             #endregion
 
@@ -136,7 +136,12 @@ namespace NetCoreAPI.AuthHelp
             log.HttpMethod= request.Method;
             log.LogLevel = context.Exception!=null? Enums.LogLevel.Error: Enums.LogLevel.Info;
             string from = "";
-            Config.VisitTos.TryGetValue(Current.VisitToKey,out from);
+            //获得Controller类型
+            Type t = context.Controller.GetType();
+            //获得方法名
+            string actionname = context.RouteData.Values["action"].ToString();
+            if (IsHaveVisitToken(actionname, t))
+                Config.VisitTos.TryGetValue(Current.VisitToKey,out from);
             log.From = from;
             StringBuilder rp = new StringBuilder();
             #region 获取请求参数
@@ -183,7 +188,15 @@ namespace NetCoreAPI.AuthHelp
             } 
             #endregion
             log.RequestParameter = rp.ToString().Replace(",}", "}");
-            log.ResponseParameter = context.Result == null ? "" : context.Result.ToJsonString();
+            
+            try
+            {
+                log.ResponseParameter = context.Result == null ? "" : context.Result.ToJsonString();
+            }
+            catch (Exception)
+            {
+                log.ResponseParameter = "";
+            }
             log.ServiceIP = request.HttpContext.Connection.LocalIpAddress.MapToIPv4().ToString() + ":" + request.HttpContext.Connection.LocalPort;
             log.StartTime = dt - time;
             log.Url = request.Path.ToUriComponent();

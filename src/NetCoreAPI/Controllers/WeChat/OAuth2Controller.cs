@@ -16,9 +16,8 @@ namespace NetCoreAPI.Controllers.WeChat
     /// <summary>
     /// 微信网页授权
     /// </summary>
-    [Route("wx/[controller]/[action]")]
     [ApiController]
-    public class OAuth2Controller : ControllerBase
+    public class OAuth2Controller : WeChatApiBase
     {
         private string appid = Config.SenparcWeixinSetting.WeixinAppId;
         private string appSecret= Config.SenparcWeixinSetting.WeixinAppSecret;

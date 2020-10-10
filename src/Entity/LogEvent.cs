@@ -7,9 +7,9 @@ using System.Text;
 namespace Entity
 {
     ///<summary>
-    ///api访问记录表
+    ///操作日志
     ///</summary>
-    [YDisplay("用户表")]
+    [YDisplay("操作日志")]
     [SugarTable("sys_log_event")]
     public class LogEvent
     {

@@ -5,14 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Portal\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Authorization\Authorization.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Entity\Entity.csproj" />
     <ProjectReference Include="..\Service\Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Portal\" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 using Common;
@@ -20,6 +21,7 @@ namespace Entity
 
 
         }
+        //[Required(ErrorMessage = "密码不能为空")]
         /// <summary>
         /// 名称 可以用于登录 （一般情况下不允修改，去重）
         /// </summary>

@@ -78,9 +78,9 @@ namespace NetCoreAPI
             #region Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo()
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
-                    Version = "v1.1.0",
+                    Version = "v1",
                     Title = "YuFaquan API",
                     Description = "desc",
                     TermsOfService = new Uri("https://yufaquan.cn"),
@@ -93,6 +93,7 @@ namespace NetCoreAPI
                 //添加读取注释服务
                 dynamic type = new Program().GetType();
                 string basePath = Path.GetDirectoryName(type.Assembly.Location);
+                Current.ServerPath = basePath;
                 var xmlPath = Path.Combine(basePath, "NetCoreAPI.xml");
                 var xmlPath2 =  Path.Combine(basePath, "Entity.xml");
                 //c.IncludeXmlComments(xmlPath);

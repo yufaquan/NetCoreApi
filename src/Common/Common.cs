@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
@@ -46,7 +47,7 @@ namespace Common
         /// <param name="str">需要切割的字符串</param>
         /// <param name="s">指定字符</param>
         /// <returns></returns>
-        public static string[] Split(string str,char s)
+        public static string[] Split(string str, char s)
         {
             if (string.IsNullOrWhiteSpace(str))
             {
@@ -63,7 +64,7 @@ namespace Common
         /// <param name="startStr">生成长度</param>
         /// <param name="endStr">生成长度</param>
         /// <returns>返回指定长度的数字和字母的随机串</returns>
-        public static string RndCode(int length,string startStr,string endStr)
+        public static string RndCode(int length, string startStr, string endStr)
         {
             char[] arrChar = new char[]{
                'a','b','d','c','e','f','g','h','i','j','k','l','m','n','p','r','q','s','t','u','v','w','z','y','x',
@@ -93,14 +94,66 @@ namespace Common
         /// <param name="startStr">生成长度</param>
         /// <param name="endStr">生成长度</param>
         /// <returns>返回指定长度的数字和字母的随机串集合</returns>
-        public static IList<string> RndCodeList(int count,int len, string startStr, string endStr)
+        public static IList<string> RndCodeList(int count, int len, string startStr, string endStr)
         {
             IList<string> list = new List<string>();
-            for (int i = 0; i < count; i++) list.Add(RndCode(len,startStr,endStr));
+            for (int i = 0; i < count; i++) list.Add(RndCode(len, startStr, endStr));
             return list;
         }
         #endregion
 
+        #region file <=> base64
+        /// <summary>
+        ///  文件转换成Base64字符串
+        /// </summary>
+        /// <param name="fs">文件流</param>
+        /// <returns></returns>
+        public static string FileToBase64(Stream fs)
+        {
+            string strRet = null;
+
+            try
+            {
+                if (fs == null) return null;
+                byte[] bt = new byte[fs.Length];
+                fs.Read(bt, 0, bt.Length);
+                strRet = Convert.ToBase64String(bt);
+                fs.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return strRet;
+        }
+
+        /// <summary>
+        /// Base64字符串转换成文件
+        /// </summary>
+        /// <param name="strInput">base64字符串</param>
+        /// <param name="fileName">保存文件的绝对路径</param>
+        /// <returns></returns>
+        public static bool Base64ToFileAndSave(string strInput, string fileName)
+        {
+            bool bTrue = false;
+
+            try
+            {
+                byte[] buffer = Convert.FromBase64String(strInput);
+                FileStream fs = new FileStream(fileName, FileMode.CreateNew);
+                fs.Write(buffer, 0, buffer.Length);
+                fs.Close();
+                bTrue = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return bTrue;
+        } 
+        #endregion
 
     }
 }
