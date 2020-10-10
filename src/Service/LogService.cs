@@ -114,7 +114,7 @@ namespace Service
             User user = Current.UserJson.JsonToModel<User>();
             var from = string.Empty;
             Config.VisitTos.TryGetValue(Current.VisitToKey, out from);
-            log.Content = $"用户{user.Name}[{user.NickName}]在[{from}]登录了系统。";
+            log.Content = $"用户{user.Name}({user.NickName})在[{from}]登录了系统。";
             log.UserId = user.Id;
             log.UserName = user.Name;
             log.WriteDate = DateTime.Now;

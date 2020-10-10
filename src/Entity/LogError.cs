@@ -24,7 +24,7 @@ namespace Entity
             Message = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             StackTrace = ex.StackTrace.Length > 300 ? ex.StackTrace.Substring(0, 300) : ex.StackTrace;
             Source = ex.Source;
-            LogLevel = Enums.LogLevel.Error;
+            LogLevel = Enums.LogLevel.Warning;
             Time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             Assembly = ex.TargetSite.Module.Assembly.FullName;
             Method = ex.TargetSite.Name;

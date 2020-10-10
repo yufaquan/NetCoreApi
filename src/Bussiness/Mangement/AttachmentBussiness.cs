@@ -21,7 +21,7 @@ namespace Bussiness.Mangement
         public AttachmentBussiness()
         {
             _service = ServiceHelp.GetAttachmentService;
-            LimitUpFileSize = ConfigurationBussiness.Init.Get().LimitUpFileSize;
+            LimitUpFileSize = ConfigurationBussiness.Init.Get(null).LimitUpFileSize;
         }
         public static AttachmentBussiness Init { get => new AttachmentBussiness(); }
 

@@ -24,7 +24,7 @@ namespace Bussiness.Mangement
         /// 获取配置
         /// </summary>
         /// <returns></returns>
-        public Configuration Get()
+        public Configuration Get(HttpContext httpContext)
         {
             var result = new Configuration();
             //获取list
@@ -39,7 +39,42 @@ namespace Bussiness.Mangement
             {
                 if (data.ContainsKey(p.Name))
                 {
-                    p.SetValue(result, data[p.Name]);
+                    #region 根据类型进行赋值
+                    if (p.PropertyType.FullName == "System.Int32")
+                    {
+                        p.SetValue(result, Convert.ToInt32(data[p.Name]));
+                    }else if (p.PropertyType.FullName == "System.Boolean")
+                    {
+                        p.SetValue(result, Convert.ToBoolean(data[p.Name]));
+                    }
+                    else if (p.PropertyType.FullName == "System.Double")
+                    {
+                        p.SetValue(result, Convert.ToDouble(data[p.Name]));
+                    }
+                    else if (p.PropertyType.FullName == "System.Decimal")
+                    {
+                        p.SetValue(result, Convert.ToDecimal(data[p.Name]));
+                    }
+                    else if (p.PropertyType.FullName == "System.DateTime")
+                    {
+                        p.SetValue(result, Convert.ToDateTime(data[p.Name]));
+                    }
+                    else if (p.PropertyType.FullName == "System.Single")
+                    {
+                        p.SetValue(result, Convert.ToSingle(data[p.Name]));
+                    }
+                    else
+                    {
+                        try
+                        {
+                            p.SetValue(result, data[p.Name]);
+                        }
+                        catch (Exception ex)
+                        {
+                            Task task1 = ServiceHelp.GetLogService.WriteErrorLogAsync(new LogError(ex, httpContext));
+                        }
+                    }
+                    #endregion
                 }
             }
             //记录操作日志

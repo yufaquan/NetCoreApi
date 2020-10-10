@@ -24,7 +24,7 @@ namespace NetCoreAPI.Controllers.Management
         [MyAuthorize(typeof(Read<Configuration>))]
         public JsonResult Get()
         {
-            return new JsonResult(HttpResult.Success(ConfigurationBussiness.Init.Get()));
+            return new JsonResult(HttpResult.Success(ConfigurationBussiness.Init.Get(HttpContext)));
         }
 
         /// <summary>
