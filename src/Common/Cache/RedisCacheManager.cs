@@ -44,11 +44,21 @@ namespace Common.Cache
                 }
                 try
                 {
-                    this.redisConnection = ConnectionMultiplexer.Connect(redisConnenctionString);
+                    var config = new ConfigurationOptions
+                    {
+                        AbortOnConnectFail = false,
+                        AllowAdmin = true,
+                        ConnectTimeout = 15000,
+                        SyncTimeout = 5000,
+                        //ResponseTimeout = 15000,
+                        Password = Config.RedisPwd,//Redis数据库密码
+                        EndPoints = { Config.RedisHost }// connectionString 为IP:Port 如”192.168.2.110:6379”
+                    };
+                    //this.redisConnection = ConnectionMultiplexer.Connect(redisConnenctionString);
+                    this.redisConnection = ConnectionMultiplexer.Connect(config);
                 }
                 catch (Exception)
                 {
-
                     throw new Exception("Redis服务未启用，请开启该服务");
                 }
             }
@@ -91,9 +101,9 @@ namespace Common.Cache
             }
         }
 
-        public void Remove(string key)
+        public bool Remove(string key)
         {
-            redisConnection.GetDatabase().KeyDelete(key);
+            return redisConnection.GetDatabase().KeyDelete(key);
         }
 
         public bool Set(string key, object value, TimeSpan expiresSliding, TimeSpan expiressAbsoulte)

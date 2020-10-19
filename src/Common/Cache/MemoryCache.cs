@@ -101,9 +101,10 @@ namespace Common.Cache
         /// 删除缓存
         /// </summary>
         /// <param name="key"></param>
-        public void Remove(string key)
+        public bool Remove(string key)
         {
             _cache.Remove(key);
+            return true;
         }
 
         /// <summary>

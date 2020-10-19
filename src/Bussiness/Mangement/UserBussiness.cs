@@ -69,6 +69,39 @@ namespace Bussiness.Mangement
         }
 
         /// <summary>
+        /// 退出登录
+        /// </summary>
+        /// <returns></returns>
+        public bool LoginOut()
+        {
+            if (Current.UserId.HasValue)
+            {
+                try
+                {
+                    bool ist = TokenHelp.RemoveUserToken(Current.UserId.Value);
+                    if (ist)
+                    {
+                        //退出登录 取消延长userToken有效期
+                        Current.IsUserTokenExtensionTime = false;
+                    }
+                    //记录日志
+                    var task = ServiceHelp.GetLogService.WriteEventLogToLogOutAsync();
+                    return ist;
+                }
+                catch (Exception ex)
+                {
+                    Task task1 = ServiceHelp.GetLogService.WriteErrorLogAsync(new LogError(ex, null));
+                    return false;
+                }
+                
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 判断但前用户是否用于对应的权限
         /// </summary>
         /// <param name="user"></param>
@@ -185,6 +218,14 @@ namespace Bussiness.Mangement
             }
             //二次加密
             user.PassWordMD5 = Commons.GetMD5_32(user.PassWordMD5);
+            //添加默认角色
+            var roles = user.RoleIds.ToList(',');
+            //不存在则添加
+            if (!roles.Exists(x=>x=="2"))
+            {
+                roles.Add("2");
+            }
+            user.RoleIds = string.Join(",", roles);
             var r = ServiceHelp.GetUserService.Add(user);
             if (r!=null)
             {
@@ -207,6 +248,14 @@ namespace Bussiness.Mangement
             }
             //二次加密
             user.PassWordMD5 = Commons.GetMD5_32(user.PassWordMD5);
+            //添加默认角色
+            var roles = user.RoleIds.ToList(',');
+            //不存在则添加
+            if (!roles.Exists(x => x == "2"))
+            {
+                roles.Add("2");
+            }
+            user.RoleIds = string.Join(",", roles);
             var rUser = _service.Edit(user);
             if (rUser == null)
             {
@@ -227,6 +276,11 @@ namespace Bussiness.Mangement
         public bool Delete(int Id, out string errorMessage)
         {
             errorMessage = string.Empty;
+            if (Id == 1)
+            {
+                errorMessage = "系统用户，无法删除！";
+                return false;
+            }
             var rb = _service.DeleteById(Id);
             if (rb)
             {

@@ -36,7 +36,7 @@ namespace NetCoreAPI.Controllers.Management
         /// <returns></returns>
         [MyAuthorize(typeof(Read<Attachment>))]
         [HttpGet]
-        public JsonResult GetList(string name,int page,int limit)
+        public JsonResult GetList(string name, int page, int limit)
         {
             var pageCount = 0;
             var data = new Attachment();
@@ -49,8 +49,8 @@ namespace NetCoreAPI.Controllers.Management
                 limit,
                 list = from a in list select new
                 {
-                    a.Name, a.Id, a.Extension,a.Enabled,a.Path,a.Size,
-                    Type=a.Type.GetDisplayName(),
+                    a.Name, a.Id, a.Extension, a.Enabled, a.Path, a.Size,
+                    Type = a.Type.GetDisplayName(),
                     CreatedAt = a.CreatedAt.ToLongString(),
                     CreatedBy = a.CreatedBy.HasValue ? ServiceHelp.GetAttachmentService.GetById(a.CreatedBy.Value)?.Name : ""
                 }
@@ -66,13 +66,13 @@ namespace NetCoreAPI.Controllers.Management
         /// <returns></returns>
         [HttpPost]
         [MyAuthorize(typeof(Create<Attachment>))]
-        public JsonResult Add([FromForm]IEnumerable<IFormFile> file)
+        public JsonResult Add([FromForm] IEnumerable<IFormFile> file)
         {
             string errorMessage;
             var result = AttachmentBussiness.Init.Add(file.ToList(), out errorMessage);
-            if (result==null)
+            if (result == null)
             {
-                return new JsonResult(HttpResult.Success( HttpResultCode.AddFail,errorMessage,result));
+                return new JsonResult(HttpResult.Success(HttpResultCode.AddFail, errorMessage, result));
             }
             else
             {
@@ -89,7 +89,7 @@ namespace NetCoreAPI.Controllers.Management
         [MyAuthorize(typeof(DownLoad<Attachment>))]
         public ActionResult DownLoadAttachment(int id) {
             var attachment = ServiceHelp.GetAttachmentService.GetById(id);
-            if (attachment!=null)
+            if (attachment != null)
             {
                 using (var sw = new FileStream(Current.ServerPath + attachment.Path, FileMode.Open))
                 {
@@ -124,6 +124,45 @@ namespace NetCoreAPI.Controllers.Management
             {
                 return new JsonResult(HttpResult.Success(HttpResultCode.SelectFail, "未查询到附件", null));
             }
+        }
+
+        /// <summary>
+        /// 修改附件名称
+        /// </summary>
+        /// <returns></returns>
+        [MyAuthorize(typeof(Update<Attachment>))]
+        [HttpPut("{id}")]
+        public ActionResult EditName(int id, [FromBody] string name)
+        {
+            string errorMessage = string.Empty;
+            var bussiness = AttachmentBussiness.Init;
+            var ydata = ServiceHelp.GetAttachmentService.GetById(id);
+            if (ydata == null)
+            {
+                errorMessage = "未查询到数据！可能已被删除。";
+            }
+            var result = AttachmentBussiness.Init.Edit(ydata, out errorMessage);
+            if (result == null || !string.IsNullOrWhiteSpace(errorMessage))
+                return new JsonResult(HttpResult.Success(HttpResultCode.EditFail, errorMessage, result));
+            else
+                return new JsonResult(HttpResult.Success(result));
+        }
+        
+        /// <summary>
+        /// 删除附件
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [MyAuthorize(typeof(Delete<Attachment>))]
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            string errorMessage = string.Empty;
+            var result = AttachmentBussiness.Init.Delete(id, out errorMessage);
+            if (!result || !string.IsNullOrWhiteSpace(errorMessage))
+                return new JsonResult(HttpResult.Success(HttpResultCode.DeleteFail, errorMessage, result));
+            else
+                return new JsonResult(HttpResult.Success(result));
         }
     }
 }

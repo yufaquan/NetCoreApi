@@ -34,6 +34,23 @@ namespace NetCoreAPI.Controllers.Management
                 return new JsonResult(HttpResult.Success(HttpResultCode.LoginFail, errorMessage, null));
             }
         }
+
+        /// <summary>
+        /// 登出
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult LoginOut()
+        {
+            if (UserBussiness.Init.LoginOut())
+            {
+                return new JsonResult(HttpResult.Success(null));
+            }
+            else
+            {
+                return new JsonResult(HttpResult.Success(HttpResultCode.Other, "登出失败，请稍候重试！", null));
+            }
+        }
     }
     public class LoginInfo
     {

@@ -125,21 +125,21 @@ namespace Bussiness.Mangement
         /// <summary>
         /// 修改
         /// </summary>
-        /// <param name="role"></param>
+        /// <param name="data"></param>
         /// <param name="errorMessage"></param>
         /// <returns>Null：失败；</returns>
-        public Attachment Edit(Attachment role,out string errorMessage)
+        public Attachment Edit(Attachment data,out string errorMessage)
         {
-            if(!VerifyData(role,out errorMessage))
+            if(!VerifyData(data,out errorMessage))
             {
                 return null;
             }
-            if (_service.GetById(role.Id)==null)
+            if (_service.GetById(data.Id)==null)
             {
-                errorMessage = "未查询到数据！";
+                errorMessage = "未查询到数据！可能已被删除。";
                 return null;
             }
-            var rAttachment = _service.Edit(role);
+            var rAttachment = _service.Edit(data);
             if (rAttachment == null)
             {
                 errorMessage = "修改失败。";
@@ -153,17 +153,22 @@ namespace Bussiness.Mangement
         /// <summary>
         /// 逻辑删除
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <param name="errorMessage"></param>
         /// <returns>True：成功；</returns>
-        public bool Delete(int Id,out string errorMessage)
+        public bool Delete(int id,out string errorMessage)
         {
             errorMessage = string.Empty;
-            var rb= _service.DeleteById(Id);
+            if (_service.GetById(id) == null)
+            {
+                errorMessage = "未查询到数据！可能已被删除。";
+                return false;
+            }
+            var rb= _service.DeleteById(id);
             if (rb)
             {
                 //删除成功，记录日志
-                Task task = ServiceHelp.GetLogService.WriteEventLogDeleteAsync(typeof(Attachment), Id);
+                Task task = ServiceHelp.GetLogService.WriteEventLogDeleteAsync(typeof(Attachment), id);
             }
             return rb;
         }
@@ -183,11 +188,11 @@ namespace Bussiness.Mangement
                 return false;
             }
 
-            if (_service.GetAllList(x => x.Name == data.Name).Count > 0)
-            {
-                errorMessage = "角色名称已存在。";
-                return false;
-            }
+            //if (_service.GetAllList(x => x.Name == data.Name).Count > 0)
+            //{
+            //    errorMessage = "名称已存在。";
+            //    return false;
+            //}
             return true;
         }
     }

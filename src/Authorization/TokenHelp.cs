@@ -101,8 +101,26 @@ namespace Authorization
             {
                 cache.Remove(cacheKey);
             }
-            cache.Set(cacheKey, jmStr, TimeSpan.FromMinutes(30), TimeSpan.FromMinutes(30));
-            return jmStr;
+            if (cache.Set(cacheKey, jmStr, TimeSpan.FromMinutes(30), TimeSpan.FromMinutes(30)))
+                return jmStr;
+            else
+                return "";
+        }
+
+        /// <summary>
+        /// 删除用户token
+        /// </summary>
+        /// <param name="userId"></param>
+        public static bool RemoveUserToken(int userId)
+        {
+            ICacheManager cache = CacheService.GetCacheManager();
+            //判断是否已存在缓存 删除缓存
+            var cacheKey = GetUserCacheKey(userId);
+            if (cache.Exists(cacheKey))
+            {
+                return cache.Remove(cacheKey);
+            }
+            return true;
         }
 
         /// <summary>

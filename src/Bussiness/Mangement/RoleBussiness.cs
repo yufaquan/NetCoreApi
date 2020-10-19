@@ -129,6 +129,11 @@ namespace Bussiness.Mangement
                 errorMessage = "有用户属于此角色，无法删除！";
                 return false;
             }
+            if (Id==1||Id==2)
+            {
+                errorMessage = "系统角色，无法删除！";
+                return false;
+            }
             var rb= _service.DeleteById(Id);
             if (rb)
             {
@@ -153,9 +158,9 @@ namespace Bussiness.Mangement
                 return false;
             }
 
-            if (data.Id == 1)
+            if (data.Id == 1 || data.Id==2)
             {
-                errorMessage = "系统设置，无法修改！";
+                errorMessage = "系统角色，无法修改！";
                 return false;
             }
             if (_service.GetAllList(x => x.Name == data.Name).Count > 0)

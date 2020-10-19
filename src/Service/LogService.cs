@@ -123,6 +123,22 @@ namespace Service
                 Db.Insertable(log).ExecuteCommand();
             });
         }
+        public async Task WriteEventLogToLogOutAsync()
+        {
+            LogEvent log = new LogEvent();
+            log.EventType = Enums.EventType.LogOut;
+            User user = Current.UserJson.JsonToModel<User>();
+            var from = string.Empty;
+            Config.VisitTos.TryGetValue(Current.VisitToKey, out from);
+            log.Content = $"用户{user.Name}({user.NickName})在[{from}]登出了系统。";
+            log.UserId = user.Id;
+            log.UserName = user.Name;
+            log.WriteDate = DateTime.Now;
+            await Task.Run(() =>
+            {
+                Db.Insertable(log).ExecuteCommand();
+            });
+        }
 
         /// <summary>
         /// 创建数据

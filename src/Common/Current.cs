@@ -35,5 +35,11 @@
         /// 项目根目录
         /// </summary>
         public static string ServerPath { get; set; }
+
+        private static bool isUserTokenExtensionTime = false;
+        /// <summary>
+        /// 是否延长UserToken有效期
+        /// </summary>
+        public static bool IsUserTokenExtensionTime { get { return isUserTokenExtensionTime; } set { isUserTokenExtensionTime = value; } }
     }
 }

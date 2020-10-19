@@ -107,8 +107,9 @@ namespace NetCoreAPI.AuthHelp
                 #endregion
             }
 
-            //成功访问
             #endregion
+
+            //成功访问
 
         }
 
@@ -208,7 +209,7 @@ namespace NetCoreAPI.AuthHelp
             #endregion
 
             #region 延长UserToken的过期时间
-            if (Current.UserId.HasValue && !string.IsNullOrWhiteSpace(Current.UserToken))
+            if (Current.UserId.HasValue && !string.IsNullOrWhiteSpace(Current.UserToken) && Current.IsUserTokenExtensionTime)
             {
                 var task1 = TokenHelp.ExtensionTimeAsync(Current.UserId.Value, Current.UserToken);
             }
@@ -279,6 +280,8 @@ namespace NetCoreAPI.AuthHelp
                 return false;
             }
             Current.UserJson = user.ToJsonString();
+            //有效的用户token 延长token有效期
+            Current.IsUserTokenExtensionTime = true;
             return true;
         }
 

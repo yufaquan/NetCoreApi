@@ -9,8 +9,10 @@ namespace Common
     /// </summary>
     public static class Config
     {
-        private static string isOpenRedis = "true";
+        private static string isOpenRedis = "false";
         private static string redisConnectionString = "127.0.0.1:6379,password=123456";
+        private static string redisHost = "127.0.0.1:6379";
+        private static string redisPwd = "123456";
         private static string mysqlConnectionStrng = "Data Source=yufaquan.cn;Port=3306;Database=netcoreapi;Uid=yufaquan;Pwd=passWord@Yfq;Allow Zero Datetime=false;charset=utf8;pooling=true;";
         private static JWTInfo jwtInfo = new JWTInfo() { Issuer = "YFQ", SigningKey = "YFQAPI's Secret Key" };
         private static string visitTokenSY = "yufaquanzhendehenshuaia";
@@ -25,6 +27,14 @@ namespace Common
         /// Redis链接字符串
         /// </summary>
         public static string RedisConnectionString { get => redisConnectionString; set => redisConnectionString = value; }
+        /// <summary>
+        /// Redis Host
+        /// </summary>
+        public static string RedisHost { get => redisHost; set => redisHost = value; }
+        /// <summary>
+        /// Redis Pwd
+        /// </summary>
+        public static string RedisPwd { get => redisPwd; set => redisPwd = value; }
         /// <summary>
         /// MySql链接字符串
         /// </summary>

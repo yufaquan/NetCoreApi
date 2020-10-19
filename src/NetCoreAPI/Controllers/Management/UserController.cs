@@ -54,11 +54,10 @@ namespace NetCoreAPI.Controllers.Management
         }
 
         /// <summary>
-        /// 获取用户信息
+        /// 获取当前用户信息
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [MyAuthorize(typeof(Read<User>))]
         public JsonResult Info()
         {
             if (Current.UserId.HasValue)

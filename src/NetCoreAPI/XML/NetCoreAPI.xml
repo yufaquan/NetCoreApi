@@ -118,6 +118,19 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:NetCoreAPI.Controllers.Management.AttachmentController.EditName(System.Int32,System.String)">
+            <summary>
+            修改附件名称
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.AttachmentController.Delete(System.Int32)">
+            <summary>
+            删除附件
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetCoreAPI.Controllers.Management.AuthorizationController">
             <summary>
             权限
@@ -162,6 +175,12 @@
             帐号密码登录
             </summary>
             <param name="info">登录参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.LoginController.LoginOut">
+            <summary>
+            登出
+            </summary>
             <returns></returns>
         </member>
         <member name="P:NetCoreAPI.Controllers.Management.LoginInfo.Name">

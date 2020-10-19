@@ -32,6 +32,7 @@ namespace NetCoreAPI
             AuthorizeData.Add(typeof(Update<Attachment>), typeof(Attachment));
             AuthorizeData.Add(typeof(Create<Attachment>), typeof(Attachment));
             AuthorizeData.Add(typeof(Delete<Attachment>), typeof(Attachment));
+            AuthorizeData.Add(typeof(DownLoad<Attachment>), typeof(Attachment));
 
             AuthorizeData.Add(typeof(Read<Configuration>), typeof(Configuration));
             AuthorizeData.Add(typeof(Update<Configuration>), typeof(Configuration));

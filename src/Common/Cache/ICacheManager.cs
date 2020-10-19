@@ -46,7 +46,7 @@ namespace Common.Cache
         /// 移除某一个缓存值
         /// </summary>
         /// <param name="key"></param>
-        void Remove(string key);
+        bool Remove(string key);
 
         /// <summary>
         /// 全部清除
