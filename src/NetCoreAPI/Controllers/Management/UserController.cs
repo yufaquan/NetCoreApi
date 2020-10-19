@@ -44,7 +44,7 @@ namespace NetCoreAPI.Controllers.Management
                 list = from a in list select new
                 {
                     a.Name, a.Id, a.Area, a.Email, a.HeadImgUrl, a.Mobile, a.NickName,
-                    a.Sex,
+                    a.Sex,a.Permissions,
                     CreatedAt = a.CreatedAt.ToLongString(),
                     CreatedBy = a.CreatedBy.HasValue ? ServiceHelp.GetUserService.GetById(a.CreatedBy.Value)?.Name : "",
                     Roles = (from role in RoleBussiness.Init.GetRoleByUserId(a.Id, out errorMessage) select new { role.Id, role.Name })

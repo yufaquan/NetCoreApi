@@ -199,6 +199,10 @@ namespace Bussiness.Mangement
             {
                 where = where.ExpressionAnd(x => x.Mobile.Contains(user.Mobile));
             }
+            if (!string.IsNullOrWhiteSpace(user.Mobile))
+            {
+                where = where.ExpressionAnd(x => x.RoleIds.ToList(',').IsSubset(user.RoleIds.ToList(',')));
+            }
 
             return ServiceHelp.GetUserService.GetPageList(where, page, limit, ref total, x => x.CreatedAt, SqlSugar.OrderByType.Desc).ToList();
         }

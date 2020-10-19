@@ -194,16 +194,19 @@ namespace Common
         /// <returns>有一个存在则返回 True.</returns>
         public static bool IsHaveStr(this string str,string[] arr,bool isqfdx=false)
         {
-            foreach (var item in arr)
+            if (isqfdx)
             {
-                if (isqfdx)
+                foreach (var item in arr)
                 {
                     if (str.Contains(item))
                     {
                         return true;
                     }
                 }
-                else
+            }
+            else
+            {
+                foreach (var item in arr)
                 {
                     if (str.ToLower().Contains(item.ToLower()))
                     {
@@ -215,6 +218,47 @@ namespace Common
         }
 
         /// <summary>
+        /// 判断字符串中是否全部包含数组中的字符
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="arr"></param>
+        /// <param name="isqfdx">师傅区分大小写</param>
+        /// <returns></returns>
+        public static bool IsHaveAllStr(this string str,string[] arr,bool isqfdx = false)
+        {
+            bool result=false;
+            if (isqfdx)
+            {
+                foreach (var item in arr)
+                {
+                    if (str.Contains(item))
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in arr)
+                {
+                    if (str.ToLower().Contains(item.ToLower()))
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
         /// 判断字符串是否等于其中一个字符串
         /// </summary>
         /// <param name="str"></param>
@@ -223,16 +267,20 @@ namespace Common
         /// <returns>只要有一个相等则返回 True.</returns>
         public static bool AsStrs(this string str, string[] arr, bool isqfdx = false)
         {
-            foreach (var item in arr)
+            if (isqfdx)
             {
-                if (isqfdx)
+                foreach (var item in arr)
                 {
                     if (str == item)
                     {
                         return true;
                     }
+
                 }
-                else
+            }
+            else
+            {
+                foreach (var item in arr)
                 {
                     if (str.ToLower() == item.ToLower())
                     {
@@ -295,6 +343,30 @@ namespace Common
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 判断是否包含集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="list2"></param>
+        /// <returns>True：包含；</returns>
+        public static bool IsSubset<T>(this List<T> list, List<T> list2)
+        {
+            bool result = false;
+            foreach (var item in list2)
+            {
+                if (list.Contains(item))
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            return result;
         }
 
 

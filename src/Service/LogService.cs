@@ -3,6 +3,8 @@ using Entity;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -282,5 +284,52 @@ namespace Service
 
 
         #endregion
+
+
+        /// <summary>
+        /// 获取API日志分页list
+        /// </summary>
+        /// <param name="whereExpression">筛选条件</param>
+        /// <param name="page">第几页</param>
+        /// <param name="limit">每页条数</param>
+        /// <param name="total">筛选后总数据条数</param>
+        /// <param name="orderByExpression">排序字段</param>
+        /// <param name="orderByType">排序方式;Default:OrderByType.Asc</param>
+        /// <returns></returns>
+        public IList<LogAPI> GetAPIPageList(Expression<Func<LogAPI, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<LogAPI, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return Db.Queryable<LogAPI>().Where(whereExpression).OrderBy(orderByExpression,orderByType).ToPageList(page, limit, ref total);
+        }
+
+        /// <summary>
+        /// 获取错误日志分页list
+        /// </summary>
+        /// <param name="whereExpression">筛选条件</param>
+        /// <param name="page">第几页</param>
+        /// <param name="limit">每页条数</param>
+        /// <param name="total">筛选后总数据条数</param>
+        /// <param name="orderByExpression">排序字段</param>
+        /// <param name="orderByType">排序方式;Default:OrderByType.Asc</param>
+        /// <returns></returns>
+        public IList<LogError> GetAPIPageList(Expression<Func<LogError, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<LogError, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return Db.Queryable<LogError>().Where(whereExpression).OrderBy(orderByExpression, orderByType).ToPageList(page, limit, ref total);
+        }
+
+        /// <summary>
+        /// 获取操作日志分页list
+        /// </summary>
+        /// <param name="whereExpression">筛选条件</param>
+        /// <param name="page">第几页</param>
+        /// <param name="limit">每页条数</param>
+        /// <param name="total">筛选后总数据条数</param>
+        /// <param name="orderByExpression">排序字段</param>
+        /// <param name="orderByType">排序方式;Default:OrderByType.Asc</param>
+        /// <returns></returns>
+        public IList<LogEvent> GetAPIPageList(Expression<Func<LogEvent, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<LogEvent, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return Db.Queryable<LogEvent>().Where(whereExpression).OrderBy(orderByExpression, orderByType).ToPageList(page, limit, ref total);
+        }
+
     }
 }

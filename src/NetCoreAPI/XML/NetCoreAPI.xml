@@ -217,6 +217,27 @@
             <param name="menus">菜单</param>
             <returns></returns>
         </member>
+        <member name="T:NetCoreAPI.Controllers.Management.RoleController">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.RoleController.GetList(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取角色列表
+            </summary>
+            <param name="name">筛选条件And拼接</param>
+            <param name="page">页数</param>
+            <param name="limit">每页多少条</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.RoleController.Add(Entity.Role)">
+            <summary>
+            创建角色
+            </summary>
+            <param name="data">角色</param>
+            <returns></returns>
+        </member>
         <member name="T:NetCoreAPI.Controllers.Management.UserController">
             <summary>
             用户
@@ -233,7 +254,7 @@
         </member>
         <member name="M:NetCoreAPI.Controllers.Management.UserController.Info">
             <summary>
-            获取用户信息
+            获取当前用户信息
             </summary>
             <returns></returns>
         </member>

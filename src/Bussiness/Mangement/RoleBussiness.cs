@@ -63,6 +63,31 @@ namespace Bussiness.Mangement
             }
             return permissions;
         }
+
+
+        /// <summary>
+        /// 获取分页数据
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="page"></param>
+        /// <param name="limit"></param>
+        /// <param name="total"></param>
+        /// <returns></returns>
+        public List<Role> GetPageList(Role data, int page, int limit, ref int total)
+        {
+            System.Linq.Expressions.Expression<Func<Role, bool>> where = null;
+            if (!string.IsNullOrWhiteSpace(data.Name))
+            {
+                where = where.ExpressionAnd(x => x.Name.Contains(data.Name));
+            }
+            if (data.PId!=0)
+            {
+                where = where.ExpressionAnd(x => x.PId==data.PId);
+            }
+
+            return ServiceHelp.GetRoleService.GetPageList(where, page, limit, ref total, x => x.CreatedAt, SqlSugar.OrderByType.Desc).ToList();
+        }
+
         /// <summary>
         /// 创建
         /// </summary>
