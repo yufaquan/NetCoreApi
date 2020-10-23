@@ -107,7 +107,6 @@ namespace Entity
         public string UserAgent { get; set; }
 
 
-
         /// <summary>
         /// 异常发生时间
         /// </summary>

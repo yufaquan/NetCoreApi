@@ -32,13 +32,13 @@ namespace NetCoreAPI.Controllers.Management
         [HttpGet]
         public JsonResult GetList(string name,int page,int limit)
         {
-            var pageCount = 0;
+            var total = 0;
             var data = new Role();
             data.Name = name;
-            var list = RoleBussiness.Init.GetPageList(data, page, limit, ref pageCount);
+            var list = RoleBussiness.Init.GetPageList(data, page, limit, ref total);
             string errorMessage;
             var result = new {
-                pageCount,
+                total,
                 page,
                 limit,
                 list = from a in list select new

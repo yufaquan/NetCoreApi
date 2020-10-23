@@ -32,7 +32,34 @@ namespace NetCoreAPI.Controllers.Management
         }
 
         /// <summary>
-        /// 获取当前用户有权限的菜单
+        /// 获取ElementUI所需的菜单列表
+        /// </summary>
+        /// <returns></returns>
+        [MyAuthorize(typeof(Read<Menus>))]
+        [HttpGet]
+        public JsonResult GetAllElementList()
+        {
+            var list = MenusBussiness.Init.GetAllElementList();
+            list = list == null ? new List<Menus>() : list;
+            return new JsonResult(HttpResult.Success(new { list = list }));
+        }
+
+
+        /// <summary>
+        /// 获取有权限的ElementUI所需的菜单路由
+        /// </summary>
+        /// <returns></returns>
+        [MyAuthorize(typeof(Read<Menus>))]
+        [HttpGet]
+        public JsonResult GetHavePermissionsElementList()
+        {
+            var list = MenusBussiness.Init.GetHavePermissionsElementList();
+            return new JsonResult(HttpResult.Success(new { list = list }));
+        }
+
+
+        /// <summary>
+        /// 获取当前用户有权限的菜单在前端进行展示
         /// </summary>
         /// <returns></returns>
         [MyAuthorize(typeof(Read<Menus>))]
@@ -50,6 +77,7 @@ namespace NetCoreAPI.Controllers.Management
         /// <param name="menus">菜单</param>
         /// <returns></returns>
         [HttpPost]
+        [MyAuthorize(typeof(Create<Menus>))]
         public JsonResult Add([FromBody] Menus menus)
         {
             var result = ServiceHelp.GetMenuService.Add(menus);

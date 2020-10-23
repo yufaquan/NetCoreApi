@@ -34,7 +34,7 @@ namespace Entity
         /// <summary>
         /// 重定向
         /// </summary>
-        public string Redirect { get=>Children!=null&&Children.Count>0?Children.FirstOrDefault().Path: Redirect; set=>Redirect=value; }
+        public string Redirect { get; set; }
 
         /// <summary>
         /// 虚拟路径
@@ -44,7 +44,7 @@ namespace Entity
         /// <summary>
         /// 菜单真实路径 
         /// </summary>
-        public string Component { get=>string.IsNullOrWhiteSpace(Component)? "Layout" : Component; set=>Component=value; }
+        public string Component { get; set; }
         /// <summary>
         /// 是否隐藏
         /// </summary>

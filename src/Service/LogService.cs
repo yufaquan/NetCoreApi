@@ -298,6 +298,10 @@ namespace Service
         /// <returns></returns>
         public IList<LogAPI> GetAPIPageList(Expression<Func<LogAPI, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<LogAPI, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
         {
+            if (whereExpression==null)
+            {
+                return Db.Queryable<LogAPI>().OrderBy(orderByExpression, orderByType).ToPageList(page, limit, ref total);
+            }
             return Db.Queryable<LogAPI>().Where(whereExpression).OrderBy(orderByExpression,orderByType).ToPageList(page, limit, ref total);
         }
 
@@ -311,8 +315,12 @@ namespace Service
         /// <param name="orderByExpression">排序字段</param>
         /// <param name="orderByType">排序方式;Default:OrderByType.Asc</param>
         /// <returns></returns>
-        public IList<LogError> GetAPIPageList(Expression<Func<LogError, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<LogError, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
+        public IList<LogError> GetErrorPageList(Expression<Func<LogError, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<LogError, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
         {
+            if (whereExpression == null)
+            {
+                return Db.Queryable<LogError>().OrderBy(orderByExpression, orderByType).ToPageList(page, limit, ref total);
+            }
             return Db.Queryable<LogError>().Where(whereExpression).OrderBy(orderByExpression, orderByType).ToPageList(page, limit, ref total);
         }
 
@@ -326,8 +334,12 @@ namespace Service
         /// <param name="orderByExpression">排序字段</param>
         /// <param name="orderByType">排序方式;Default:OrderByType.Asc</param>
         /// <returns></returns>
-        public IList<LogEvent> GetAPIPageList(Expression<Func<LogEvent, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<LogEvent, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
+        public IList<LogEvent> GetEventPageList(Expression<Func<LogEvent, bool>> whereExpression, int page, int limit, ref int total, Expression<Func<LogEvent, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Asc)
         {
+            if (whereExpression == null)
+            {
+                return Db.Queryable<LogEvent>().OrderBy(orderByExpression, orderByType).ToPageList(page, limit, ref total);
+            }
             return Db.Queryable<LogEvent>().Where(whereExpression).OrderBy(orderByExpression, orderByType).ToPageList(page, limit, ref total);
         }
 

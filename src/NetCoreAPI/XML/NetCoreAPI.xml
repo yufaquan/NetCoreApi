@@ -165,6 +165,38 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:NetCoreAPI.Controllers.Management.LogController">
+            <summary>
+            日志
+            </summary>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.LogController.GetAPIList(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取API访问列表
+            </summary>
+            <param name="from">筛选条件:访问来源</param>
+            <param name="page">页数</param>
+            <param name="limit">每页多少条</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.LogController.GetEventList(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取操作日志
+            </summary>
+            <param name="content">筛选条件:操作内容</param>
+            <param name="page">页数</param>
+            <param name="limit">每页多少条</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.LogController.GetErrorList(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取错误日志
+            </summary>
+            <param name="userName">筛选条件:用户名称</param>
+            <param name="page">页数</param>
+            <param name="limit">每页多少条</param>
+            <returns></returns>
+        </member>
         <member name="T:NetCoreAPI.Controllers.Management.LoginController">
             <summary>
             登录
@@ -204,9 +236,21 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:NetCoreAPI.Controllers.Management.MenuController.GetAllElementList">
+            <summary>
+            获取ElementUI所需的菜单列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetCoreAPI.Controllers.Management.MenuController.GetHavePermissionsElementList">
+            <summary>
+            获取有权限的ElementUI所需的菜单路由
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:NetCoreAPI.Controllers.Management.MenuController.GetHavePermissionsList">
             <summary>
-            获取当前用户有权限的菜单
+            获取当前用户有权限的菜单在前端进行展示
             </summary>
             <returns></returns>
         </member>

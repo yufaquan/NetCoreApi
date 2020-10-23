@@ -13,7 +13,7 @@ namespace Entity
     [SugarTable("sys_log_event")]
     public class LogEvent
     {
-
+        public int Id { get; set; }
         /// <summary>
         /// 操作时间
         /// </summary>

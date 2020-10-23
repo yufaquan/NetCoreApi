@@ -17,121 +17,62 @@ namespace Bussiness.Mangement
         {
             _service = ServiceHelp.GetLogService;
         }
-        public static AttachmentBussiness Init { get => new AttachmentBussiness(); }
+        public static LogBussiness Init { get => new LogBussiness(); }
 
 
         /// <summary>
-        /// 获取分页数据
+        /// 获取API数据
         /// </summary>
         /// <param name="filter">过滤条件</param>
         /// <param name="page">第几页</param>
         /// <param name="limit">每页多少个</param>
         /// <param name="total">总数</param>
         /// <returns></returns>
-        public List<User> GetPageList(Attachment filter, int page, int limit, ref int total)
+        public List<LogAPI> GetAPIPageList(LogAPI filter, int page, int limit, ref int total)
         {
-            System.Linq.Expressions.Expression<Func<User, bool>> where = null;
-            if (!string.IsNullOrWhiteSpace(filter.Name))
+            System.Linq.Expressions.Expression<Func<LogAPI, bool>> where = null;
+            if (!string.IsNullOrWhiteSpace(filter.From))
             {
-                where = where.ExpressionAnd(x => x.Name.Contains(filter.Name));
+                where = where.ExpressionAnd(x => x.From.Contains(filter.From));
             }
-            return ServiceHelp.GetUserService.GetPageList(where, page, limit, ref total, x => x.CreatedAt, SqlSugar.OrderByType.Desc).ToList();
+            return _service.GetAPIPageList(where, page, limit, ref total, x => x.StartTime, SqlSugar.OrderByType.Desc).ToList();
         }
 
         /// <summary>
-        /// 创建
+        /// 获取事件数据
         /// </summary>
-        /// <param name="data"></param>
-        /// <param name="errorMessage"></param>
-        /// <returns>Null：失败；</returns>
-        public Attachment Add(Attachment data,out string errorMessage)
+        /// <param name="filter">过滤条件</param>
+        /// <param name="page">第几页</param>
+        /// <param name="limit">每页多少个</param>
+        /// <param name="total">总数</param>
+        /// <returns></returns>
+        public List<LogEvent> GetEventPageList(LogEvent filter, int page, int limit, ref int total)
         {
-            if (!VerifyData(data,out errorMessage))
+            System.Linq.Expressions.Expression<Func<LogEvent, bool>> where = null;
+            if (!string.IsNullOrWhiteSpace(filter.Content))
             {
-                return null;
+                where = where.ExpressionAnd(x => x.Content.Contains(filter.Content));
             }
-            var rAttachment= _service.Add(data);
-            if (rAttachment == null)
-            {
-                errorMessage = "创建失败。";
-                return null;
-            }
-            //记录操作日志
-            Task task = ServiceHelp.GetLogService.WriteEventLogCreateAsync(typeof(Attachment), rAttachment.Id, rAttachment.ToJsonString());
-            return rAttachment;
+            return _service.GetEventPageList(where, page, limit, ref total, x => x.WriteDate, SqlSugar.OrderByType.Desc).ToList();
         }
 
         /// <summary>
-        /// 修改
+        /// 获取错误数据
         /// </summary>
-        /// <param name="data"></param>
-        /// <param name="errorMessage"></param>
-        /// <returns>Null：失败；</returns>
-        public Attachment Edit(Attachment data,out string errorMessage)
+        /// <param name="filter">过滤条件</param>
+        /// <param name="page">第几页</param>
+        /// <param name="limit">每页多少个</param>
+        /// <param name="total">总数</param>
+        /// <returns></returns>
+        public List<LogError> GetErrorPageList(LogError filter, int page, int limit, ref int total)
         {
-            if(!VerifyData(data,out errorMessage))
+            System.Linq.Expressions.Expression<Func<LogError, bool>> where = null;
+            if (!string.IsNullOrWhiteSpace(filter.UserName))
             {
-                return null;
+                where = where.ExpressionAnd(x => x.UserName.Contains(filter.UserName));
             }
-            if (_service.GetById(data.Id)==null)
-            {
-                errorMessage = "未查询到数据！可能已被删除。";
-                return null;
-            }
-            var rAttachment = _service.Edit(data);
-            if (rAttachment == null)
-            {
-                errorMessage = "修改失败。";
-                return null;
-            }
-            //记录操作日志
-            Task task = ServiceHelp.GetLogService.WriteEventLogEditAsync(typeof(Attachment), rAttachment.Id, rAttachment.ToJsonString());
-            return rAttachment;
+            return _service.GetErrorPageList(where, page, limit, ref total, x => x.Time, SqlSugar.OrderByType.Desc).ToList();
         }
 
-        /// <summary>
-        /// 逻辑删除
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="errorMessage"></param>
-        /// <returns>True：成功；</returns>
-        public bool Delete(int id,out string errorMessage)
-        {
-            errorMessage = string.Empty;
-            if (_service.GetById(id) == null)
-            {
-                errorMessage = "未查询到数据！可能已被删除。";
-                return false;
-            }
-            var rb= _service.DeleteById(id);
-            if (rb)
-            {
-                //删除成功，记录日志
-                Task task = ServiceHelp.GetLogService.WriteEventLogDeleteAsync(typeof(Attachment), id);
-            }
-            return rb;
-        }
-
-        /// <summary>
-        /// 检测数据
-        /// </summary>
-        /// <param name="data">数据</param>
-        /// <param name="errorMessage">错误信息</param>
-        /// <returns>True：校验通过；</returns>
-        private bool VerifyData(Attachment data,out string errorMessage)
-        {
-            errorMessage = string.Empty;
-            if (data == null)
-            {
-                errorMessage = "请检查是否传入数据。";
-                return false;
-            }
-            if (_service.GetAllList(x => x.Name == data.Name).Count > 0)
-            {
-                errorMessage = "角色名称已存在。";
-                return false;
-            }
-            return true;
-        }
     }
 }
